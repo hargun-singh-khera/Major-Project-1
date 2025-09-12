@@ -10,6 +10,8 @@ import Products from './pages/Products.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Wishlist from './pages/Wishlist.jsx'
 import Cart from './pages/Cart.jsx'
+import UserProfile from './pages/UserProfile.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />
+  },
+  {
+    path: "/profile",
+    element: <UserProfile />
   }
 ])
 

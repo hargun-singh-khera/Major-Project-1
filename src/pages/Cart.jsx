@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import Header from "../components/Header"
 
 const Cart = () => {
@@ -18,15 +17,15 @@ const Cart = () => {
                   <div className="card-body">
                     <h5 className="card-title">Men Premium Jacket</h5>
                     <div className="d-flex align-items-center gap-4">
-                      <h3 className="fs-2 fw-bold">₹ 2000</h3>
-                      <h4 className="text-body-tertiary fw-light text-decoration-line-through text-opacity-50">₹ 4000</h4>
+                      <h3 className="fs-2 fw-bold">₹2000</h3>
+                      <h4 className="text-body-tertiary fw-light text-decoration-line-through text-opacity-50">₹4000</h4>
                     </div>
                     <h4 className="text-body-tertiary fw-light mb-4">50% Off</h4>
-                    <div className="d-flex mb-3">
+                    <div className="d-flex gap-3 mb-3">
                       <span><strong>Quantity: </strong></span>
-                      <button className="btn btn-outline-secondary rounded-circle">-</button>
-                      <input class="form-control" type="text" value="2" aria-label="readonly input example" readonly />
-                      <button className="btn btn-outline-secondary rounded-circle">+</button>
+                      <button className="btn btn-sm btn-outline-secondary rounded-4">-</button>
+                      2
+                      <button className="btn btn-sm btn-outline-secondary rounded-4">+</button>
                     </div>
                     <button className="btn btn-secondary mb-2 w-100 rounded-0">Remove From Cart</button>
                     <button className="btn btn-outline-secondary w-100 rounded-0">Move to Wishlist</button>

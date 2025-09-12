@@ -45,6 +45,13 @@ const Header = () => {
                     </span>
                   </Link>
                 </li>
+                <li>
+                  <Link className="btn position-relative" to="/profile">
+                    <span class="material-symbols-outlined">
+                      person
+                    </span>
+                  </Link>
+                </li>
               </ul>
             </div>            
           </div>
