@@ -37,9 +37,9 @@ const ProductDetails = () => {
                   2
                   <button className="btn btn-sm btn-outline-secondary rounded-4">+</button>
                 </div>
-                <div className="d-flex gap-3">
+                <div className="d-flex">
                   <span><strong>Size:</strong></span>
-                  <div className="d-flex gap-4">
+                  <div className="d-flex flex-wrap gap-4 ms-2">
                     <button className="btn btn-outline-secondary rounded-0">S</button>
                     <button className="btn btn-outline-secondary rounded-0">M</button>
                     <button className="btn btn-outline-secondary rounded-0">XL</button>
@@ -47,7 +47,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
                 <hr />
-                <div className="d-flex gap-5">
+                <div className="d-flex gap-4 flex-wrap">
                   <ProductBuyingBenefits />
                 </div>
                 <hr />
