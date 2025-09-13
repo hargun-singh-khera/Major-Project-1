@@ -9,18 +9,14 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className="w-25">
-
-            </div>
-            <div className="w-auto py-3 py-lg-1">
+            
+            <div className="mx-auto py-3 py-lg-1">
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
               </form>
             </div>
-            <div className="w-25">
-
-            </div>
-            <div className="w-auto py-1">
+            
+            <div className="ms-auto py-1">
               <ul className="navbar-nav d-flex flex-row py-1" >
                 <li><Link className="btn btn-secondary" to="/login">Login</Link></li>
                 <li>
