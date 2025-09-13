@@ -6,7 +6,7 @@ const ShopByCategory = () => {
       <h6 style={{color: "#f53f85"}}>See our collection</h6>
       <h3>Shop By Categories</h3>
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-lg-4">
           <Link to="/products/men" className="text-decoration-none">
             <div class="card border-0">
               <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img2.jpg" class="card-img-top img-fluid" alt="..." />
@@ -16,7 +16,7 @@ const ShopByCategory = () => {
             </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4">
           <Link to="/products/women" className="text-decoration-none">
             <div class="card border-0">
               <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img3.jpg" class="card-img-top img-fluid" alt="..." />
@@ -26,7 +26,7 @@ const ShopByCategory = () => {
             </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4">
           <Link to="/products/kids" className="text-decoration-none">
             <div class="card border-0">
               <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img1.jpg" class="card-img-top img-fluid" alt="..." />
