@@ -12,7 +12,7 @@ const Header = () => {
             <div className="w-25">
 
             </div>
-            <div className="w-auto">
+            <div className="w-auto py-3 py-lg-1">
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
               </form>
