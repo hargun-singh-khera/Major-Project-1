@@ -67,9 +67,10 @@ const ProductDetails = () => {
               <hr  />
               <h3 className="fs-4 fw-semibold">More items you may like in apparel</h3>
               <div className="row row-cols-1 row-cols-md-4 g-4 my-2">
-                <div className="col">
-                  <ProductCard category={category} productId={productId} />
-                </div>
+                <ProductCard category={category} productId={1} />
+                <ProductCard category={category} productId={2} />
+                <ProductCard category={category} productId={3} />
+                <ProductCard category={category} productId={4} />
               </div>
             </div>
           </div>

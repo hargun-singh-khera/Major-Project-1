@@ -7,13 +7,13 @@ const Cart = () => {
       <main className="container my-4">
         <h4 className="text-center mb-3">My Cart (1)</h4>
         <div className="row justify-content-center">
-          <div className="col-md-4">
-            <div className="card mb-3 border-0">
+          <div className="col-lg-6">
+            <div className="card mb-3 border-0" >
               <div className="row g-0">
-                <div className="col-md-4">
-                  <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="img-fluid " alt="..." />
+                <div className="col-lg-6">
+                  <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="img-fluid h-100 w-100 object-fit-cover" alt="..." />
                 </div>
-                <div className="col-md-8 p-1">
+                <div className="col-lg-6 py-xl-5 py-lg-4 py-md-3">
                   <div className="card-body">
                     <h5 className="card-title">Men Premium Jacket</h5>
                     <div className="d-flex align-items-center gap-4">
@@ -34,7 +34,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4">
             <div className="card border-0 rounded p-3">
               <div className="card-body">
                 <h3>PRICE DETAILS</h3>
