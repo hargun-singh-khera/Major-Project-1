@@ -21,29 +21,29 @@ const Header = () => {
                 <li><Link className="btn btn-secondary" to="/login">Login</Link></li>
                 <li>
                   <Link className="btn position-relative" to="/wishlist">
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                       favorite
                     </span>
-                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                    <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
                       0
-                      <span class="visually-hidden">unread messages</span>
+                      <span className="visually-hidden">unread messages</span>
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link className="btn position-relative" to="/cart">
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                       shopping_cart
                     </span>
-                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                    <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
                       0
-                      <span class="visually-hidden">unread messages</span>
+                      <span className="visually-hidden">unread messages</span>
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link className="btn position-relative" to="/profile">
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                       person
                     </span>
                   </Link>

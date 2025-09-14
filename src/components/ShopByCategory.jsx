@@ -1,41 +1,29 @@
-import { Link } from "react-router-dom"
+import CategoryCard from "./CategoryCard"
+import useFetch from "../useFetch"
+import PlaceholderCard from "../components/PlaceholderCard"
+
+export const renderPlaceholders = (count, Component) => {
+  return [...Array(count)].map((item, index) => <Component key={index} />)
+}
 
 const ShopByCategory = () => {
+  const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/categories")
+  console.log("data", data)
+
   return (
     <section id="shopByCategory" className="bg-white px-5 py-4">
       <h6 style={{color: "#f53f85"}}>See our collection</h6>
       <h3>Shop By Categories</h3>
+      {loading && (
+        <div className="row">
+          {renderPlaceholders(3, PlaceholderCard)}
+        </div>
+      )}
+      {error && <p>Something went wrong while fetching categories. Please try again later.</p>}
       <div className="row">
-        <div className="col-lg-4">
-          <Link to="/products/men" className="text-decoration-none">
-            <div class="card border-0">
-              <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img2.jpg" class="card-img-top img-fluid" alt="..." />
-              <div class="card-body">
-                <p class="card-text text-center fs-4">Men</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-        <div className="col-lg-4">
-          <Link to="/products/women" className="text-decoration-none">
-            <div class="card border-0">
-              <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img3.jpg" class="card-img-top img-fluid" alt="..." />
-              <div class="card-body">
-                <p class="card-text text-center fs-4">Women</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-        <div className="col-lg-4">
-          <Link to="/products/kids" className="text-decoration-none">
-            <div class="card border-0">
-              <img src="https://templates.hibootstrap.com/xton/default/assets/img/categories/img1.jpg" class="card-img-top img-fluid" alt="..." />
-              <div class="card-body">
-                <p class="card-text text-center fs-4">Kids</p>
-              </div>
-            </div>
-          </Link>
-        </div>
+        {data && data.length > 0 && data.map(category => (
+          <CategoryCard key={category._id} category={category} />
+        ))}
       </div>
     </section>
   )

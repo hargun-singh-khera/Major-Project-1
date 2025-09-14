@@ -2,10 +2,15 @@ import { useParams } from "react-router-dom"
 import Header from "../components/Header"
 import FilterBar from "../components/FilterBar"
 import ProductCard from "../components/ProductCard"
+import useFetch from "../useFetch"
+import { renderPlaceholders } from "../components/ShopByCategory"
+import PlaceholderCard from "../components/PlaceholderCard"
 
 const Products = () => {
   const { category } = useParams()
   console.log("category", category)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products/category/${category}`)
+  console.log("data", data)
   return (
     <>
       <Header />
@@ -16,7 +21,7 @@ const Products = () => {
             <h4 className="fs-4 mt-2 mb-4">Showing All Products <span className="fs-6">(Showing 20 products)</span></h4>
             <p className="d-inline-flex gap-1 d-sm-block d-md-block d-lg-block d-block d-xl-none d-xxl-none">
               <button className="btn btn-secondary " type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Filter &nbsp; <i class="bi bi-funnel-fill"></i>
+                Filter &nbsp; <i className="bi bi-funnel-fill"></i>
               </button>
             </p>
             <div className="collapse mb-3" id="collapseExample">
@@ -25,14 +30,13 @@ const Products = () => {
               </div>
             </div>
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-              <ProductCard category={category} productId={1} />
-              <ProductCard category={category} productId={2} />
-              <ProductCard category={category} productId={3} />
-              <ProductCard category={category} productId={4} />
-              <ProductCard category={category} productId={5} />
-              <ProductCard category={category} productId={5} />
-              <ProductCard category={category} productId={5} />
-              <ProductCard category={category} productId={5} />
+              {loading && renderPlaceholders(12, PlaceholderCard)}
+            </div>
+            {error && <p className="py-5">Something went wrong while loading products. Please try again later. </p>}
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
+              {data && data.length > 0 && data.map(product => (
+                <ProductCard key={product._id} product={product} />
+              ))}
             </div>
           </div>
         </div>

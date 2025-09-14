@@ -7,14 +7,14 @@ const Wishlist = () => {
       <Header />
       <main className="container my-4">
         <h4>My Wishlist</h4>
-        <div className="row row-cols-1 row-cols-md-4 g-4">
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
           <div className="col">
             <Link to={`/products/`} className="text-decoration-none">
               <div className="card border-0 rounded">
                 <div className="position-relative">
                   <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="card-img-top img-fluid" alt="..." />
                   <div className="my-2 me-2 position-absolute top-0 end-0 rounded-circle bg-white py-1 px-2 d-flex justify-content-center align-items-center">
-                    <i class="bi bi-heart-fill text-danger"></i>
+                    <i className="bi bi-heart-fill text-danger"></i>
                   </div>
                 </div>
                 <div className="card-body">
