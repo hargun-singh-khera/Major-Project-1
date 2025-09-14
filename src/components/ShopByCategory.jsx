@@ -2,8 +2,8 @@ import CategoryCard from "./CategoryCard"
 import useFetch from "../useFetch"
 import PlaceholderCard from "../components/PlaceholderCard"
 
-export const renderPlaceholders = (count, Component) => {
-  return [...Array(count)].map((item, index) => <Component key={index} />)
+export const renderPlaceholders = (count, Component, isRender) => {
+  return [...Array(count)].map((item, index) => <Component isRender={isRender} key={index} />)
 }
 
 const ShopByCategory = () => {
@@ -16,9 +16,9 @@ const ShopByCategory = () => {
       <h3>Shop By Categories</h3>
       {loading && (
         <div className="row">
-          {renderPlaceholders(3, PlaceholderCard)}
+          {renderPlaceholders(3, PlaceholderCard, true)}
         </div>
-      )}
+      )} 
       {error && <p>Something went wrong while fetching categories. Please try again later.</p>}
       <div className="row">
         {data && data.length > 0 && data.map(category => (

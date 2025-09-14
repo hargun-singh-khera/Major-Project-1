@@ -10,7 +10,7 @@ const Products = () => {
   const { category } = useParams()
   console.log("category", category)
   const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products/category/${category}`)
-  console.log("data", data)
+  console.log("products data", data)
   return (
     <>
       <Header />
