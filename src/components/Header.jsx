@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
+import { useProductContext } from "../contexts/ProductContext"
 const Header = () => {
+  const { wishlistCount, cartCount } = useProductContext()
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-white">
@@ -25,7 +27,7 @@ const Header = () => {
                       favorite
                     </span>
                     <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
-                      0
+                      {wishlistCount}
                       <span className="visually-hidden">unread messages</span>
                     </span>
                   </Link>
@@ -36,7 +38,7 @@ const Header = () => {
                       shopping_cart
                     </span>
                     <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
-                      0
+                      {cartCount}
                       <span className="visually-hidden">unread messages</span>
                     </span>
                   </Link>

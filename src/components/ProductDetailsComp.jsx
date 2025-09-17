@@ -1,8 +1,10 @@
 import Rating from './Rating.jsx';
 import ProductBuyingBenefits from './ProductBuyingBenefits.jsx';
+import { useState } from 'react';
 
 const ProductDetailsComp = ({ product, category }) => {
-  const { title, price, discount, size, description } = product;
+  const { title, price, rating, discount, size, description } = product;
+  const [quantity, setQuantity] = useState(1)
   return (
     <div className="card mb-3 border-0">
       <div className="row g-0">
@@ -23,7 +25,7 @@ const ProductDetailsComp = ({ product, category }) => {
         <div className="col-lg-6 px-4">
           <div className="card-body">
             <h3 className="card-title">{title}</h3>
-            <Rating />
+            <Rating rating={rating} />
             <div className="d-flex align-items-center gap-4">
               <h3 className="fs-2 fw-bold">
                 ₹{Math.round(price * ((100 - discount) / 100))}
@@ -39,11 +41,11 @@ const ProductDetailsComp = ({ product, category }) => {
               <span>
                 <strong>Quantity: </strong>
               </span>
-              <button className="btn btn-sm btn-outline-secondary rounded-4">
+              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity > 0 ? quantity - 1 : 0)}>
                 -
               </button>
-              1
-              <button className="btn btn-sm btn-outline-secondary rounded-4">
+              {quantity}
+              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity + 1)}>
                 +
               </button>
             </div>

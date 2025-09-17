@@ -11,6 +11,7 @@ import ProductDetails from './pages/ProductDetails.jsx'
 import Wishlist from './pages/Wishlist.jsx'
 import Cart from './pages/Cart.jsx'
 import UserProfile from './pages/UserProfile.jsx'
+import { ProductProvider } from './contexts/ProductContext.jsx'
 
 
 const router = createBrowserRouter([
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ProductProvider>
+     <RouterProvider router={router} />
+    </ProductProvider>
   </StrictMode>,
 )
