@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard"
 import useFetch from "../useFetch"
 import { renderPlaceholders } from "../components/ShopByCategory"
 import PlaceholderCard from "../components/PlaceholderCard"
+import { useEffect, useState } from "react"
 
 const Products = () => {
   const { category } = useParams()
@@ -12,12 +13,20 @@ const Products = () => {
   const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products/category/${category}`)
   console.log("products data", data)
 
+  const [productsData, setProductsData] = useState([])
+
+  useEffect(() => {
+    if(data) {
+      setProductsData(data)
+    }
+  }, [data])
+
   return (
     <>
       <Header />
       <main className="container-fluid">
         <div className="d-flex">
-          <FilterBar />
+          <FilterBar products={productsData} setProductsData={setProductsData} />
           <div className="w-100 w-100 p-1 px-md-2 px-lg-5 py-3">
             <h4 className="fs-4 mt-2 mb-4">Showing All Products <span className="fs-6">(Showing {data?.length || 0} products)</span></h4>
             <p className="d-inline-flex gap-1 d-sm-block d-md-block d-lg-block d-block d-xl-none d-xxl-none">
@@ -27,7 +36,7 @@ const Products = () => {
             </p>
             <div className="collapse mb-3" id="collapseExample">
               <div className="card card-body">
-                <FilterBar isFlex={true} />
+                <FilterBar products={productsData} setProductsData={setProductsData} isFlex={true} />
               </div>
             </div>
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
@@ -35,7 +44,7 @@ const Products = () => {
             </div>
             {error && <p className="py-5">Something went wrong while loading products. Please try again later. </p>}
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
-              {data && data.length > 0 && data.map(product => (
+              {productsData && productsData.length > 0 && productsData.map(product => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
