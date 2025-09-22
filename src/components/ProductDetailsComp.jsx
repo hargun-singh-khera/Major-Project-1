@@ -41,7 +41,7 @@ const ProductDetailsComp = ({ product, category }) => {
               <span>
                 <strong>Quantity: </strong>
               </span>
-              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity > 0 ? quantity - 1 : 0)}>
+              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity > 1 ? quantity - 1 : 1)}>
                 -
               </button>
               {quantity}

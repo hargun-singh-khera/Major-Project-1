@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom"
 import { useProductContext } from "../contexts/ProductContext"
-const Header = () => {
+const Header = ({ setSearchQuery }) => {
   const { wishlistCount, cartCount } = useProductContext()
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-white">
@@ -14,7 +19,7 @@ const Header = () => {
             
             <div className="mx-auto py-3 py-lg-1">
               <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleSearch} />
               </form>
             </div>
             
