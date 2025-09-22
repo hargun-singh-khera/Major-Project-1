@@ -23,6 +23,7 @@ const FilterBar = ({products, setProductsData, isFlex = false}) => {
 
   useEffect(() => {
     const filteredProducts = category.length > 0 ? products.filter(product => category.includes(product.category)) : rating > 0 ? products.filter(product => product.rating >= rating) : products
+    // const filteredProducts = category.length > 0 ? products.filter(product => category.includes(product.category)) : rating > 0 ? products.filter(product => product.rating >= rating) : sortProductsBy == "asc" ? products.sort((a, b) => a.price - b.price) : sortProductsBy === "desc" ? products.sort((a, b) => b.price - a.price) : products
     setProductsData(filteredProducts)
   }, [category, rating, sortedProducts])
 
