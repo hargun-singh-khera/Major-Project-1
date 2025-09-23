@@ -10,7 +10,9 @@ import { useEffect, useState } from "react"
 const Products = () => {
   // const { category } = useParams()
   // console.log("category", category)
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  // const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
+
   console.log("products data", data)
 
   const [productsData, setProductsData] = useState([])
