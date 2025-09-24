@@ -44,7 +44,7 @@ const ProductCard = ({ product}) => {
       
       const data = await response.json()
       incrementWishlistCount()
-      setIsAddToWishlist(true)
+      setIsAddToWishlist(!isAddToWishlist)
       console.log("submitted data", data)
     } catch (error) {
       console.log("error", error)

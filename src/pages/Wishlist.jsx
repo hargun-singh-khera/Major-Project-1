@@ -9,8 +9,8 @@ import { useEffect } from "react"
 
 const Wishlist = () => {
   const userId = "68cab48b2c77561237bcf9f0"
-  // const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}`)
-  const { data, loading, error } = useFetch(`http://localhost:3000/api/wishlists/${userId}`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}`)
+  // const { data, loading, error } = useFetch(`http://localhost:3000/api/wishlists/${userId}`)
 
   console.log("data", data)
 
@@ -29,7 +29,7 @@ const Wishlist = () => {
     e.stopPropagation()
     console.log("wishlistId", wishlistId, "typeof wishlistId", typeof wishlistId)
     try {
-      const response = await fetch(`http://localhost:3000/api/wishlists/${wishlistId}`, {
+      const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${wishlistId}`, {
         method: "DELETE",
       })
       if(response.ok) {

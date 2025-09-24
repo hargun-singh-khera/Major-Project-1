@@ -17,9 +17,9 @@ const Header = ({ setSearchQuery }) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             
-            <div className="mx-auto py-3 py-lg-1">
+            <div className="mx-auto py-3 py-lg-1 ">
               <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleSearch} />
+                <input className="form-control me-2 px-4 rounded" type="search" placeholder="Search for products..." aria-label="Search" onChange={handleSearch} />
               </form>
             </div>
             

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const FilterBar = ({products, setProductsData, isFlex = false}) => {
+const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) => {
   const [category, setCategory] = useState([])
   const [rating, setRating] = useState(0)
   const [price, setPrice] = useState(2500)
@@ -25,18 +25,30 @@ const FilterBar = ({products, setProductsData, isFlex = false}) => {
 
   useEffect(() => {
     if(!products || products.length === 0) return
-    const filterByCategory = products.filter(product => category.includes(product.category))
-    const filterByRating = products.filter(product => product.rating >= rating)
-    const filterByPrice = products.filter(product => product.price >= price)
-    const sortByPriceAsc = products.sort((a, b) => a.price - b.price)
-    const sortByPriceDesc = products.sort((a, b) => b.price - a.price)
 
-    const filteredProducts = category.length > 0 ? filterByCategory : rating > 0 ? filterByRating : price >= 0 && price !== 2500 ? filterByPrice : sortedProducts === "asc" ? sortByPriceAsc : sortedProducts === "desc" ? sortByPriceDesc : products
+    let filteredProducts = products
+    if(searchQuery !== "") {
+      filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase() || product.title.toLowerCase().includes(searchQuery.toLowerCase()))))
+    }
+    if(category.length > 0) {
+      filteredProducts = filteredProducts.filter(product => category.includes(product.category))
+    }
+    if(rating > 0) {
+      filteredProducts = filteredProducts.filter(product => product.rating >= rating)
+    }
+    if(price >= 0 && price !== 2500) {
+      filteredProducts = filteredProducts.filter(product => product.price <= price)
+    }
+    if(sortedProducts === "asc") {
+      filteredProducts = filteredProducts.sort((a, b) => a.price - b.price)
+    }
+    if(sortedProducts === "desc") {
+      filteredProducts = filteredProducts.sort((a, b) => b.price - a.price)
+    }
     setProductsData(filteredProducts)
-  }, [category, rating, sortedProducts, price])
+  }, [category, rating, sortedProducts, price, searchQuery])
 
-  // console.log("sortedProducts", sortedProducts)
-  // console.log("products", products)
+
   return (
     <div className={`${!isFlex ? "w-25 d-none d-sm-none d-md-none d-lg-none d-xl-block d-xxl-block" : ""} bg-white`}>
       <div className="d-flex justify-content-between align-items-center w-100 p-4">
@@ -46,7 +58,7 @@ const FilterBar = ({products, setProductsData, isFlex = false}) => {
       <div className="px-4 py-3">
         <h4>Price</h4>
         <h6 className="d-flex justify-content-center">₹{price}</h6>
-        <input type="range" min="0" max="5000" step={500} value={price} onChange={(e) => setPrice(e.target.value)} className="form-range" id="range1" />
+        <input type="range" min="0" max="5000" step={100} value={price} onChange={(e) => setPrice(e.target.value)} className="form-range" id="range1" />
       </div>
       <div className={isFlex ? "d-flex flex-column flex-md-row" : ""}>
         <div className="px-4 py-3">
