@@ -10,7 +10,6 @@ import { useEffect } from "react"
 const Wishlist = () => {
   const userId = "68cab48b2c77561237bcf9f0"
   const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}`)
-  // const { data, loading, error } = useFetch(`http://localhost:3000/api/wishlists/${userId}`)
 
   console.log("data", data)
 
@@ -24,18 +23,17 @@ const Wishlist = () => {
     }
   }, [data])
 
-  const handleDeleteWishlist = async (e, wishlistId) => {
+  const handleDeleteWishlist = async (e, productId) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log("wishlistId", wishlistId, "typeof wishlistId", typeof wishlistId)
     try {
-      const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${wishlistId}`, {
+      const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}/${productId}`, {
         method: "DELETE",
       })
       if(response.ok) {
         console.log("Product deleted from wishlist")
       }
-      setWishlistData((prevWishlist) => prevWishlist.filter(wishlist => wishlist._id !== wishlistId))
+      setWishlistData((prevProduct) => prevProduct.filter(product => product.productId._id !== productId))
       decrementWishListCount()
     } catch (error) {
       console.log(error)
@@ -61,7 +59,7 @@ const Wishlist = () => {
                   <div className="position-relative">
                     <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="card-img-top img-fluid" alt={product.productId.name} />
                     <div className="my-2 me-2 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
-                      <svg onClick={(e) => handleDeleteWishlist(e, product._id)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z"/></svg>
+                      <svg onClick={(e) => handleDeleteWishlist(e, product.productId._id)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z"/></svg>
                     </div>
                   </div>
                   <div className="card-body">

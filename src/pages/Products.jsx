@@ -7,7 +7,9 @@ import PlaceholderCard from "../components/PlaceholderCard"
 import { useEffect, useState } from "react"
 
 const Products = () => {
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  // const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
+
 
   const [productsData, setProductsData] = useState(data)
   const [searchQuery, setSearchQuery] = useState("")
@@ -37,7 +39,7 @@ const Products = () => {
               </div>
             </div>
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-              {loading && renderPlaceholders(12, PlaceholderCard)}
+              {loading && renderPlaceholders(8, PlaceholderCard)}
             </div>
             {error && <p className="py-5">Something went wrong while loading products. Please try again later. </p>}
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
