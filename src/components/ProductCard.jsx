@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useProductContext } from "../contexts/ProductContext"
 import { useEffect, useState } from "react"
 
 const ProductCard = ({ product }) => {
-  const { _id: productId, category, name, price, imageUrl, isWishlisted } = product
+  const navigate = useNavigate();
 
-  const { incrementWishlistCount, decrementWishListCount, incrementCartCount, decrementCartCount } = useProductContext()
+  const { _id: productId, category, name, price, imageUrl, isWishlisted, isAddedToCart } = product
+
+  const { incrementWishlistCount, decrementWishListCount, incrementCartCount } = useProductContext()
   const userId = "68cab48b2c77561237bcf9f0"
 
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
+  const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
 
   const handleFavClick = async (e) => {
     e.preventDefault()
@@ -46,7 +49,47 @@ const ProductCard = ({ product }) => {
     setIsAddToWishlist(!isAddToWishlist)
   }
 
+  const handleAddToCart = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log("handle cart clicked")
+    if(!isAddToCart) {
+      // add item to cart
+      try {
+        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        const data = await response.json()
+        incrementCartCount()
+      } catch (error) {
+        console.log("error", error)
+      }
+    }
+    else {
+      navigate("/cart")
+    }
+    // else {
+    //   // remove item from cart
+      // try {
+      //   const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
+      //     method: "DELETE",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     }
+      //   })
+      //   const data = await response.json()
+      //   decrementCartCount()
+      // } catch (error) {
+      //   console.log("error", error)
+      // }
+    // }
+    setIsAddToCart(!isAddToCart)
+  }
 
+  console.log("isAddToCart", isAddToCart)
   return (
     <div className="col">
       <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
@@ -69,7 +112,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </Link>
-      <button type="button" className="btn btn-secondary rounded-top-0 w-100">Add to Cart</button>
+      <button type="button" onClick={handleAddToCart} className={`btn ${isAddToCart ? "btn-primary" : "btn-secondary"}  rounded-top-0 w-100`}>{isAddToCart ? "Go to Cart" : "Add to Cart"}</button>
     </div>
   )
 }
