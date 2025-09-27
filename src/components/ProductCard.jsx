@@ -5,7 +5,9 @@ import { useEffect, useState } from "react"
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
-  const { _id: productId, category, name, price, imageUrl, isWishlisted, isAddedToCart } = product
+  const { _id: productId, category, name, price, discount, rating, isNew, imageUrl, isWishlisted, isAddedToCart } = product
+  console.log("product", product)
+  const discountedPrice = Math.round(price * (100-discount)/100)
 
   const { incrementWishlistCount, decrementWishListCount, incrementCartCount } = useProductContext()
   const userId = "68cab48b2c77561237bcf9f0"
@@ -95,7 +97,7 @@ const ProductCard = ({ product }) => {
       <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
         <div className="card border-0 rounded">
           <div className="position-relative">
-            <img src={imageUrl} className="card-img-top img-fluid" alt="..." />
+            <img src={imageUrl} className="card-img-top object-fit-cover img-fluid" alt="..." />
             <div className="my-2 me-2 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
               {isAddToWishlist ? (
                 <svg onClick={handleFavClick} xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z"/></svg>
@@ -105,10 +107,18 @@ const ProductCard = ({ product }) => {
                 </span>
               )}
             </div>
+            {isNew && <span class="position-absolute ms-2 mt-2 top-0 start-0 badge rounded-pill text-bg-success">New</span>}
+            <span class="position-absolute bottom-0 start-0 mb-2 ms-2 badge rounded-pill text-bg-light">
+              <i className="bi bi-star-fill text-warning"></i> {rating} | 350
+            </span>
           </div>
           <div className="card-body">
-            <h5 className="card-title text-center text-body-secondary">{name}</h5>
-            <h3 className="card-text text-center">₹{price}</h3>
+            <h5 className="card-title text-body-secondary">{name}</h5>
+            <div className="d-flex gap-2 align-items-center">
+              <h5 className="card-text mb-0">₹{discountedPrice}</h5>
+              <h6 className="card-text text-decoration-line-through fw-lighter mb-0">₹{price}</h6>
+              <p className="mb-0 text-danger-emphasis">({discount}% OFF)</p>
+            </div>
           </div>
         </div>
       </Link>
