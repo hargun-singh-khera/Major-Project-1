@@ -26,7 +26,7 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
   useEffect(() => {
     if(!products || products.length === 0) return
 
-    let filteredProducts = products
+    let filteredProducts = [...products]
     if(searchQuery !== "") {
       filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase() || product.title.toLowerCase().includes(searchQuery.toLowerCase()))))
     }
