@@ -35,7 +35,7 @@ const Products = () => {
             </p>
             <div className="collapse mb-3" id="collapseExample">
               <div className="card card-body">
-                <FilterBar products={productsData} setProductsData={setProductsData} isFlex={true} />
+                <FilterBar products={data} setProductsData={setProductsData} searchQuery={searchQuery} isFlex={true} />
               </div>
             </div>
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
