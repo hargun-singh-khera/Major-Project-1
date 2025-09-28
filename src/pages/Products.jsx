@@ -8,8 +8,8 @@ import { useProductContext } from "../contexts/ProductContext"
 import useFetch from "../useFetch"
 
 const Products = () => {
-  // const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
-  const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  // const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
 
   const [productsData, setProductsData] = useState(data)
   const [searchQuery, setSearchQuery] = useState("")
