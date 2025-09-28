@@ -1,24 +1,27 @@
 import Header from "../components/Header"
 import FilterBar from "../components/FilterBar"
 import ProductCard from "../components/ProductCard"
-import useFetch from "../useFetch"
 import { renderPlaceholders } from "../components/ShopByCategory"
 import PlaceholderCard from "../components/PlaceholderCard"
 import { useEffect, useState } from "react"
+import { useProductContext } from "../contexts/ProductContext"
+import useFetch from "../useFetch"
 
 const Products = () => {
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
-  // const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
-
+  // const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
 
   const [productsData, setProductsData] = useState(data)
   const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
-    if(data) {
+    if (data) {
       setProductsData(data)
     }
   }, [data])
+
+  console.log("productsData", productsData)
+  console.log("search query from products", searchQuery)
 
   return (
     <>

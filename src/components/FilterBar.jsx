@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 
 const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) => {
+  console.log("search query", searchQuery)
+
   const [category, setCategory] = useState([])
   const [rating, setRating] = useState(0)
   const [price, setPrice] = useState(2500)
@@ -27,8 +29,9 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
     if(!products || products.length === 0) return
 
     let filteredProducts = [...products]
+    console.log("filteredProducts", filteredProducts)
     if(searchQuery !== "") {
-      filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase() || product.title.toLowerCase().includes(searchQuery.toLowerCase()))))
+      filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.title.toLowerCase().includes(searchQuery.toLowerCase())))
     }
     if(category.length > 0) {
       filteredProducts = filteredProducts.filter(product => category.includes(product.category))

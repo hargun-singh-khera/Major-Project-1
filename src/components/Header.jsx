@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
-import { useProductContext } from "../contexts/ProductContext"
+import { useWishlistContext } from "../contexts/WishlistContext"
+import { useCartContext } from "../contexts/CartContext"
 const Header = ({ setSearchQuery }) => {
-  const { wishlistCount, cartCount } = useProductContext()
+  const { wishlistCount } = useWishlistContext()
+  const { cartCount } = useCartContext()
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value)
@@ -16,47 +18,58 @@ const Header = ({ setSearchQuery }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            
-            <div className="mx-auto py-3 py-lg-1 ">
-              <form className="d-flex" role="search">
-                <input className="form-control me-2 px-4 rounded" type="search" placeholder="Search for products..." aria-label="Search" onChange={handleSearch} />
+
+            <div className="ms-auto py-3 py-lg-1 col-12 col-lg-5">
+              <form className="d-flex position-relative align-items-center" role="search">
+                <span className="position-absolute material-symbols-outlined px-3">
+                  search
+                </span>
+                <input className="form-control me-2 px-5 rounded-5 py-2" type="search" placeholder="Search for products, brands and more ..." aria-label="Search" onChange={handleSearch} />
               </form>
             </div>
-            
+
             <div className="ms-auto py-1">
               <ul className="navbar-nav d-flex flex-row py-1" >
-                <li><Link className="btn btn-secondary" to="/login">Login</Link></li>
+                {/* <li><Link className="btn btn-secondary mx-2" to="/login">Login</Link></li> */}
                 <li>
-                  <Link className="btn position-relative" to="/wishlist">
-                    <span className="material-symbols-outlined">
-                      favorite
-                    </span>
-                    <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
-                      {wishlistCount}
-                      <span className="visually-hidden">unread messages</span>
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link className="btn position-relative" to="/cart">
-                    <span className="material-symbols-outlined">
-                      shopping_cart
-                    </span>
-                    <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
-                      {cartCount}
-                      <span className="visually-hidden">unread messages</span>
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link className="btn position-relative" to="/profile">
-                    <span className="material-symbols-outlined">
+                  <Link className="btn position-relative d-flex flex-column" to="/profile">
+                    <span className="material-symbols-outlined" style={{ fontSize: "30px"}}>
                       person
                     </span>
+                    <h6 style={{ fontSize: "12px" }}>Profile</h6>
                   </Link>
                 </li>
+                <li>
+                  <Link className="btn d-flex flex-column" to="/wishlist">
+                    <div className="position-relative">
+                      <span className="material-symbols-outlined fs-4">
+                        favorite
+                      </span>
+                      <span className="position-absolute top-0 translate-middle translate-middle badge rounded-pill bg-danger ">
+                        {wishlistCount > 0 && wishlistCount}
+                        {wishlistCount > 0 && <span className="visually-hidden">unread messages</span>}
+                      </span>
+                    </div>
+                    <h6 style={{ fontSize: "12px" }}>Wishlist</h6>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="btn d-flex flex-column" to="/cart">
+                    <div className="position-relative">
+                      <span className="material-symbols-outlined fs-4">
+                        local_mall
+                      </span>
+                      <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                        {cartCount > 0 && cartCount}
+                        {cartCount > 0 && <span className="visually-hidden">unread messages</span>}
+                      </span>
+                    </div>
+                    <h6 style={{ fontSize: "12px" }}>Bag</h6>
+                  </Link>
+                </li>
+
               </ul>
-            </div>            
+            </div>
           </div>
         </div>
       </nav>

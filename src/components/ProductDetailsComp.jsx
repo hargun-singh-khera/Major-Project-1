@@ -1,14 +1,15 @@
 import Rating from './Rating.jsx';
 import ProductBuyingBenefits from './ProductBuyingBenefits.jsx';
-import { useProductContext } from "../contexts/ProductContext"
 import { useState } from 'react';
+import { useWishlistContext } from '../contexts/WishlistContext.jsx';
 
 const ProductDetailsComp = ({ product, category }) => {
-  const { _id: productId, title, price, rating, discount, size, description, isWishlisted } = product;
+  console.log("product", product)
+  const userId = "68cab48b2c77561237bcf9f0"
+  const { _id: productId, name, title, price, rating, discount, size, description, isWishlisted, isAddedToCart } = product;
   const [quantity, setQuantity] = useState(1)
 
-  const { incrementWishlistCount, decrementWishListCount, incrementCartCount, decrementCartCount } = useProductContext()
-  const userId = "68cab48b2c77561237bcf9f0"
+  const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
   
   const handleFavClick = async (e) => {
@@ -16,33 +17,11 @@ const ProductDetailsComp = ({ product, category }) => {
     e.stopPropagation()
     if (!isAddToWishlist) {
       // add item to wishlist
-      try {
-        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}/${productId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-        const data = await response.json()
-        incrementWishlistCount()
-      } catch (error) {
-        console.log("error", error)
-      }
+      await addItemToWishlist(productId)
     }
     else {
       // remove wishlisted item
-       try {
-        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}/${productId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-        const data = await response.json()
-        decrementWishListCount()
-      } catch (error) {
-        console.log("error", error)
-      }
+      await removeItemFromWishlist(productId)
     }
     setIsAddToWishlist(!isAddToWishlist)
   }
@@ -54,7 +33,7 @@ const ProductDetailsComp = ({ product, category }) => {
           <img
             src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg"
             className="img-fluid"
-            alt="..."
+            alt={name}
           />
           <div className="my-4 me-4 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
             {isAddToWishlist ? (
@@ -68,7 +47,7 @@ const ProductDetailsComp = ({ product, category }) => {
           <button className="btn btn-block btn-primary my-3 w-100">
             Buy Now
           </button>
-          <button className="btn btn-secondary w-100">Add to Cart</button>
+          <button className="btn btn-secondary w-100">{isAddedToCart ? "Remove from Cart" : "Add to Cart"}</button>
         </div>
         <div className="col-lg-6 px-4">
           <div className="card-body">
@@ -89,11 +68,11 @@ const ProductDetailsComp = ({ product, category }) => {
               <span>
                 <strong>Quantity: </strong>
               </span>
-              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity > 1 ? quantity - 1 : 1)}>
+              <button className="btn btn-sm btn-outline-secondary rounded-circle px-2" onClick={() => setQuantity(quantity => quantity > 1 ? quantity - 1 : 1)}>
                 -
               </button>
-              {quantity}
-              <button className="btn btn-sm btn-outline-secondary rounded-4" onClick={() => setQuantity(quantity => quantity + 1)}>
+              <span>{quantity}</span>
+              <button className="btn btn-sm btn-outline-secondary rounded-circle px-2" onClick={() => setQuantity(quantity => quantity < 10 ? quantity + 1: quantity)}>
                 +
               </button>
             </div>

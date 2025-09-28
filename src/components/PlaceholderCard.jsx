@@ -1,5 +1,5 @@
 const PlaceholderCard = ({isRender = false}) => {
-  console.log("isRender", isRender)
+  // console.log("isRender", isRender)
   return (
     <div className={`${isRender && "col-lg-4"} py-3`}>
       <div className="card border-0" aria-hidden="true">

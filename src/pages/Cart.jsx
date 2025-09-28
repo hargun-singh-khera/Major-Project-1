@@ -1,54 +1,57 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Header from "../components/Header"
+import { useCartContext } from "../contexts/CartContext"
+import { useWishlistContext } from "../contexts/WishlistContext"
 import useFetch from "../useFetch"
-import { useProductContext } from "../contexts/ProductContext"
 
 const Cart = () => {
   const userId = "68cab48b2c77561237bcf9f0"
   const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}`)
 
-  const { decrementCartCount } = useProductContext()
+  const [cartData, setCartData] = useState([])
 
-  console.log("cart data", data)
-  const deliveryCharges = 499  
-  const totalPrice = data?.reduce((acc, curr) => acc + (curr.productId.price * curr.quantity), 0)
-  const totalDiscount = Math.round(data?.reduce((acc, curr) => acc + (curr.productId.price * (curr.productId.discount / 100)), 0))
+  useEffect(() => {
+    if (data) {
+      setCartData(data)
+    }
+  }, [data])
+
+  const { removeItemFromCart } = useCartContext()
+  const { addItemToWishlist } = useWishlistContext()
+
+  const deliveryCharges = 499
+  const totalPrice = cartData?.reduce((acc, curr) => acc + (curr.productId.price * curr.quantity), 0)
+  const totalDiscount = Math.round(cartData?.reduce((acc, curr) => acc + (curr.productId.price * (curr.productId.discount / 100)), 0))
 
   const totalPayableAmount = totalPrice - totalDiscount + deliveryCharges
   const [quantity, setQuantity] = useState(1)
 
-  const handleRemoveFromCart = async (e, productId) => {
-    console.log("remove from cart clicked", productId)
-    try {
-      const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-      if(!response.ok) {
-        throw new Error("Failed to remove product from cart")
-      }
-      const data = await response.json()
-      console.log("Product deleted from cart")
-      decrementCartCount()
-    } catch (error) {
-      console.log("error", error)
-    }
+  const handleRemoveFromCart = async (e, cartId, productId) => {
+    await removeItemFromCart(cartId, productId)
+    setCartData((prevCartData) => prevCartData.filter(cartItem => cartItem._id !== cartId))
+
   }
+
+  const handleMoveToWishlist = async (e, cartId, productId) => {
+    await addItemToWishlist(productId)
+    await removeItemFromCart(cartId, productId)
+    setCartData((prevCartData) => prevCartData.filter(cartItem => cartItem._id !== cartId))
+  }
+
+  console.log("cartData", cartData)
 
   return (
     <>
       <Header />
       <main className="container my-4">
-        <h4 className="text-center mb-3">My Cart ({data?.length || 0})</h4>
+        <h4 className="text-center mb-3">My Cart ({cartData?.length || 0})</h4>
         {loading && <p className="text-center">Loading ...</p>}
         {error && <p>Something went wrong while loading cart. Please try again later.</p>}
-        {data && data.length > 0 ? (
+        {cartData && cartData.length > 0 ? (
           <div className="row justify-content-center">
             <div className="col-lg-6">
-              {data.map(cartItem => (
-                <div className="card mb-3 border-0" >
+              {cartData.map(cartItem => (
+                <div key={cartItem._id} className="card mb-3 border-0" >
                   <div className="row g-0">
                     <div className="col-lg-6">
                       <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="img-fluid h-100 w-100 object-fit-cover" alt="..." />
@@ -67,8 +70,8 @@ const Cart = () => {
                           {quantity}
                           <button onClick={() => setQuantity((prev) => prev + 1)} className="btn btn-sm btn-outline-secondary rounded-4">+</button>
                         </div>
-                        <button onClick={(e) => handleRemoveFromCart(e, cartItem.productId._id)} className="btn btn-secondary mb-2 w-100 rounded-0">Remove From Cart</button>
-                        <button className="btn btn-outline-secondary w-100 rounded-0">Move to Wishlist</button>
+                        <button onClick={(e) => handleRemoveFromCart(e, cartItem._id, cartItem.productId._id)} className="btn btn-secondary mb-2 w-100 rounded-0">Remove From Cart</button>
+                        <button onClick={(e) => handleMoveToWishlist(e, cartItem._id, cartItem.productId._id)} className="btn btn-outline-secondary w-100 rounded-0">Move to Wishlist</button>
                       </div>
                     </div>
                   </div>
@@ -82,7 +85,7 @@ const Cart = () => {
                   <hr />
                   <div>
                     <div className="d-flex justify-content-between">
-                      <p className="fs-4">Price ({data?.length || 0} item)</p>
+                      <p className="fs-4">Price ({cartData?.length || 0} item)</p>
                       <p>₹{totalPrice}</p>
                     </div>
                     <div className="d-flex justify-content-between">

@@ -1,16 +1,17 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useProductContext } from "../contexts/ProductContext"
 import { useEffect, useState } from "react"
+import { useCartContext } from "../contexts/CartContext";
+import { useWishlistContext } from "../contexts/WishlistContext";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const { _id: productId, category, name, price, discount, rating, isNew, imageUrl, isWishlisted, isAddedToCart } = product
-  console.log("product", product)
-  const discountedPrice = Math.round(price * (100-discount)/100)
+  // console.log("product", product)
 
-  const { incrementWishlistCount, decrementWishListCount, incrementCartCount } = useProductContext()
-  const userId = "68cab48b2c77561237bcf9f0"
+  const discountedPrice = Math.round(price * (100-discount)/100)
+  const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
+  const { addItemToCart } = useCartContext()
 
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
   const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
@@ -20,33 +21,11 @@ const ProductCard = ({ product }) => {
     e.stopPropagation()
     if (!isAddToWishlist) {
       // add item to wishlist
-      try {
-        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}/${productId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-        const data = await response.json()
-        incrementWishlistCount()
-      } catch (error) {
-        console.log("error", error)
-      }
+      await addItemToWishlist(productId)
     }
     else {
       // remove wishlisted item
-       try {
-        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}/${productId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-        const data = await response.json()
-        decrementWishListCount()
-      } catch (error) {
-        console.log("error", error)
-      }
+      await removeItemFromWishlist(productId)
     }
     setIsAddToWishlist(!isAddToWishlist)
   }
@@ -57,41 +36,14 @@ const ProductCard = ({ product }) => {
     console.log("handle cart clicked")
     if(!isAddToCart) {
       // add item to cart
-      try {
-        const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-        const data = await response.json()
-        incrementCartCount()
-      } catch (error) {
-        console.log("error", error)
-      }
+      await addItemToCart(productId)
+      setIsAddToCart(true)
     }
     else {
       navigate("/cart")
     }
-    // else {
-    //   // remove item from cart
-      // try {
-      //   const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
-      //     method: "DELETE",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     }
-      //   })
-      //   const data = await response.json()
-      //   decrementCartCount()
-      // } catch (error) {
-      //   console.log("error", error)
-      // }
-    // }
-    setIsAddToCart(!isAddToCart)
   }
-
-  console.log("isAddToCart", isAddToCart)
+  
   return (
     <div className="col">
       <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
@@ -107,9 +59,9 @@ const ProductCard = ({ product }) => {
                 </span>
               )}
             </div>
-            {isNew && <span class="position-absolute ms-2 mt-2 top-0 start-0 badge rounded-pill text-bg-success">New</span>}
-            <span class="position-absolute bottom-0 start-0 mb-2 ms-2 badge rounded-pill text-bg-light">
-              <i className="bi bi-star-fill text-warning"></i> {rating} | 350
+            {isNew && <span className="position-absolute ms-1 mt-1 top-0 start-0 badge rounded-pill text-bg-success">New</span>}
+            <span className="position-absolute bottom-0 start-0 mb-2 ms-2 badge rounded-pill text-bg-light">
+              <i className="bi bi-star-fill text-warning"></i> {rating}
             </span>
           </div>
           <div className="card-body">
