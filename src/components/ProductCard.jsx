@@ -6,10 +6,9 @@ import { useWishlistContext } from "../contexts/WishlistContext";
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
-  const { _id: productId, category, name, price, discount, rating, isNew, imageUrl, isWishlisted, isAddedToCart } = product
+  const { _id: productId, category, name, price, discountedPrice, discount, rating, isNew, imageUrl, stockItems, isWishlisted, isAddedToCart } = product
   // console.log("product", product)
 
-  const discountedPrice = Math.round(price * (100-discount)/100)
   const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
   const { addItemToCart } = useCartContext()
 
@@ -63,13 +62,20 @@ const ProductCard = ({ product }) => {
             <span className="position-absolute bottom-0 start-0 mb-2 ms-2 badge rounded-pill text-bg-light">
               <i className="bi bi-star-fill text-warning"></i> {rating}
             </span>
+            {stockItems <= 5 && <span style={{ fontSize: "10px"}} className="position-absolute bottom-0 end-0 mb-2 mx-2 badge rounded-pill text-bg-danger">Only {stockItems} left!</span>}
           </div>
           <div className="card-body">
             <h5 className="card-title text-body-secondary">{name}</h5>
             <div className="d-flex gap-2 align-items-center">
-              <h5 className="card-text mb-0">₹{discountedPrice}</h5>
-              <h6 className="card-text text-decoration-line-through fw-lighter mb-0">₹{price}</h6>
-              <p className="mb-0 text-danger-emphasis">({discount}% OFF)</p>
+              {discount > 0 ? (
+                <>
+                  <h5 className="card-text mb-0">₹{discountedPrice}</h5>
+                  <h6 className="card-text text-decoration-line-through fw-lighter mb-0">₹{price}</h6>
+                  <p className="mb-0 text-danger-emphasis">({discount}% OFF)</p>
+                </>
+              ) : (
+                <h5 className="card-text mb-0">₹{discountedPrice}</h5>
+              )}
             </div>
           </div>
         </div>

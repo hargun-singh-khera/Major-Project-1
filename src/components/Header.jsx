@@ -11,7 +11,7 @@ const Header = ({ setSearchQuery }) => {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg bg-white">
+      <nav className="navbar navbar-expand-lg bg-white py-lg-0">
         <div className="container">
           <Link className="navbar-brand" to="/">MyShoppingSite</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@ const Header = ({ setSearchQuery }) => {
                 {/* <li><Link className="btn btn-secondary mx-2" to="/login">Login</Link></li> */}
                 <li>
                   <Link className="btn position-relative d-flex flex-column" to="/profile">
-                    <span className="material-symbols-outlined" style={{ fontSize: "30px"}}>
+                    <span className="material-symbols-outlined" style={{ fontSize: "25px"}}>
                       person
                     </span>
                     <h6 style={{ fontSize: "12px" }}>Profile</h6>
@@ -42,7 +42,7 @@ const Header = ({ setSearchQuery }) => {
                 <li>
                   <Link className="btn d-flex flex-column" to="/wishlist">
                     <div className="position-relative">
-                      <span className="material-symbols-outlined fs-4">
+                      <span className="material-symbols-outlined fs-5">
                         favorite
                       </span>
                       <span className="position-absolute top-0 translate-middle translate-middle badge rounded-pill bg-danger ">
@@ -56,7 +56,7 @@ const Header = ({ setSearchQuery }) => {
                 <li>
                   <Link className="btn d-flex flex-column" to="/cart">
                     <div className="position-relative">
-                      <span className="material-symbols-outlined fs-4">
+                      <span className="material-symbols-outlined fs-5">
                         local_mall
                       </span>
                       <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">

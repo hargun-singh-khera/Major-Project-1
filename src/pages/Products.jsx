@@ -50,6 +50,7 @@ const Products = () => {
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
+            {searchQuery !== "" && productsData && productsData.length === 0 && <p className="py-5">No matching products found for {searchQuery}.</p>}
           </div>
         </div>
       </main>

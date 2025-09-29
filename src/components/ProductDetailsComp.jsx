@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { useWishlistContext } from '../contexts/WishlistContext.jsx';
 
 const ProductDetailsComp = ({ product, category }) => {
-  console.log("product", product)
-  const userId = "68cab48b2c77561237bcf9f0"
-  const { _id: productId, name, title, price, rating, discount, size, description, isWishlisted, isAddedToCart } = product;
+  const { _id: productId, name, title, price, rating, discount, discountedPrice, stockItems, size, description, isWishlisted, isAddedToCart } = product;
   const [quantity, setQuantity] = useState(1)
 
   const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
@@ -54,16 +52,16 @@ const ProductDetailsComp = ({ product, category }) => {
             <h3 className="card-title">{title}</h3>
             <Rating rating={rating} />
             <div className="d-flex align-items-center gap-4">
-              <h3 className="fs-2 fw-bold">
-                ₹{Math.round(price * ((100 - discount) / 100))}
-              </h3>
-              <h4 className="text-body-tertiary fw-light text-decoration-line-through text-opacity-50">
-                ₹{price}
-              </h4>
+              {discount > 0 ? (
+                <>
+                  <h3 className="fs-2 fw-bold">₹{discountedPrice}</h3>
+                  <h4 className="text-body-tertiary fw-light text-decoration-line-through text-opacity-50">₹{price}</h4>
+                </>
+              ) : (
+                <h3 className="fs-2 fw-bold">₹{price}</h3>
+              )}
             </div>
-            <h4 className="text-body-tertiary fw-light mb-4">
-              {discount}% Off
-            </h4>
+            {discount > 0 && <h4 className="text-body-tertiary fw-light mb-4">{discount}% Off</h4>}
             <div className="d-flex gap-3 mb-3">
               <span>
                 <strong>Quantity: </strong>

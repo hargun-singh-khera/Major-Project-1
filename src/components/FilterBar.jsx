@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) => {
   console.log("search query", searchQuery)
 
+  const DEFAULT_MAX_PRICE = 2500
+
   const [category, setCategory] = useState([])
   const [rating, setRating] = useState(0)
   const [price, setPrice] = useState(2500)
@@ -21,7 +23,7 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
   const handleClearFilter = (e) => {
     setCategory([])
     setRating(0)
-    setPrice(2500)
+    setPrice(DEFAULT_MAX_PRICE)
     setSortedProducts("")
   }
 
@@ -29,7 +31,6 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
     if(!products || products.length === 0) return
 
     let filteredProducts = [...products]
-    console.log("filteredProducts", filteredProducts)
     if(searchQuery !== "") {
       filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.title.toLowerCase().includes(searchQuery.toLowerCase())))
     }
@@ -39,14 +40,14 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
     if(rating > 0) {
       filteredProducts = filteredProducts.filter(product => product.rating >= rating)
     }
-    if(price >= 0 && price !== 2500) {
+    if(price >= 0 && price !== DEFAULT_MAX_PRICE) {
       filteredProducts = filteredProducts.filter(product => product.price <= price)
     }
     if(sortedProducts === "asc") {
-      filteredProducts = filteredProducts.sort((a, b) => a.price - b.price)
+      filteredProducts = filteredProducts.sort((a, b) => a.discountedPrice - b.discountedPrice)
     }
     if(sortedProducts === "desc") {
-      filteredProducts = filteredProducts.sort((a, b) => b.price - a.price)
+      filteredProducts = filteredProducts.sort((a, b) => b.discountedPrice - a.discountedPrice)
     }
     setProductsData(filteredProducts)
   }, [category, rating, sortedProducts, price, searchQuery])

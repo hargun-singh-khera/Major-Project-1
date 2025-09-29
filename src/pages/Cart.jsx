@@ -47,7 +47,8 @@ const Cart = () => {
         <h4 className="text-center mb-3">My Cart ({cartData?.length || 0})</h4>
         {loading && <p className="text-center">Loading ...</p>}
         {error && <p>Something went wrong while loading cart. Please try again later.</p>}
-        {cartData && cartData.length > 0 ? (
+        {!loading && !error && cartData?.length === 0 && <p>Looks like your cart is empty. Please add some products to your cart.</p>}
+        {cartData && cartData.length > 0 && (
           <div className="row justify-content-center">
             <div className="col-lg-6">
               {cartData.map(cartItem => (
@@ -109,7 +110,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-        ) : (<p>Looks like your cart is empty. Please add some products to your cart.</p>)}
+        )}
       </main>
     </>
   )
