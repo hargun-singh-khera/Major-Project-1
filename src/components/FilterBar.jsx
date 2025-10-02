@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react"
+import { useProductContext } from "../contexts/ProductContext"
 
-const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) => {
-  console.log("search query", searchQuery)
+const FilterBar = ({ isFlex = false }) => {
+  const { category, setCategory, rating, setRating, price, setPrice, sortedProducts, setSortedProducts, clearFilter } = useProductContext()
+  // console.log("In filterbar cat", category, "rating", rating, "price", price)
 
-  const DEFAULT_MAX_PRICE = 2500
-
-  const [category, setCategory] = useState([])
-  const [rating, setRating] = useState(0)
-  const [price, setPrice] = useState(2500)
-  const [sortedProducts, setSortedProducts] = useState("")
 
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target
@@ -20,44 +15,12 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
     }
   }
 
-  const handleClearFilter = (e) => {
-    setCategory([])
-    setRating(0)
-    setPrice(DEFAULT_MAX_PRICE)
-    setSortedProducts("")
-  }
-
-  useEffect(() => {
-    if(!products || products.length === 0) return
-
-    let filteredProducts = [...products]
-    if(searchQuery !== "") {
-      filteredProducts = filteredProducts.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.title.toLowerCase().includes(searchQuery.toLowerCase())))
-    }
-    if(category.length > 0) {
-      filteredProducts = filteredProducts.filter(product => category.includes(product.category))
-    }
-    if(rating > 0) {
-      filteredProducts = filteredProducts.filter(product => product.rating >= rating)
-    }
-    if(price >= 0 && price !== DEFAULT_MAX_PRICE) {
-      filteredProducts = filteredProducts.filter(product => product.price <= price)
-    }
-    if(sortedProducts === "asc") {
-      filteredProducts = filteredProducts.sort((a, b) => a.discountedPrice - b.discountedPrice)
-    }
-    if(sortedProducts === "desc") {
-      filteredProducts = filteredProducts.sort((a, b) => b.discountedPrice - a.discountedPrice)
-    }
-    setProductsData(filteredProducts)
-  }, [category, rating, sortedProducts, price, searchQuery])
-
 
   return (
     <div className={`${!isFlex ? "w-25 d-none d-sm-none d-md-none d-lg-none d-xl-block d-xxl-block" : ""} bg-white`}>
       <div className="d-flex justify-content-between align-items-center w-100 p-4">
         <h4>Filters</h4>
-        <button className="btn btn-link" onClick={handleClearFilter}>Clear</button>
+        <button className="btn btn-link" onClick={() => clearFilter()}>Clear</button>
       </div>
       <div className="px-4 py-3">
         <h4>Price</h4>
@@ -89,25 +52,25 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
         <div className="px-4 py-3">
           <h4>Rating</h4>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="fourStars" id="fourStars" checked={rating === 4} onChange={() => setRating(4)} />
+            <input className="form-check-input" type="radio" name="rating" id="fourStars" checked={rating === 4} onChange={() => setRating(4)} />
             <label className="form-check-label" htmlFor="fourStars">
               4 stars & above
             </label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="radioDefault" id="threeStars" checked={rating === 3} onChange={() => setRating(3)} />
+            <input className="form-check-input" type="radio" name="rating" id="threeStars" checked={rating === 3} onChange={() => setRating(3)} />
             <label className="form-check-label" htmlFor="threeStars">
               3 stars & above
             </label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="radioDefault" id="twoStars" checked={rating === 2} onChange={() => setRating(2)} />
+            <input className="form-check-input" type="radio" name="rating" id="twoStars" checked={rating === 2} onChange={() => setRating(2)} />
             <label className="form-check-label" htmlFor="twoStars">
               2 stars & above
             </label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="radioDefault" id="oneStar" checked={rating === 1} onChange={() => setRating(1)} />
+            <input className="form-check-input" type="radio" name="rating" id="oneStar" checked={rating === 1} onChange={() => setRating(1)} />
             <label className="form-check-label" htmlFor="oneStar">
               1 stars & above
             </label>
@@ -116,13 +79,13 @@ const FilterBar = ({ products, setProductsData, isFlex = false, searchQuery }) =
         <div className="px-4">
           <h4>Sort by</h4>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="lowToHigh" id="lowToHigh" checked={sortedProducts === "asc"} onChange={() => setSortedProducts("asc")} />
+            <input className="form-check-input" type="radio" name="sort" id="lowToHigh" checked={sortedProducts === "asc"} onChange={() => setSortedProducts("asc")} />
             <label className="form-check-label" htmlFor="lowToHigh">
               Price - Low to High
             </label>
           </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="highToLow" id="highToLow" checked={sortedProducts === "desc"} onChange={() => setSortedProducts("desc")} />
+            <input className="form-check-input" type="radio" name="sort" id="highToLow" checked={sortedProducts === "desc"} onChange={() => setSortedProducts("desc")} />
             <label className="form-check-label" htmlFor="highToLow">
               Price - High to Low
             </label>

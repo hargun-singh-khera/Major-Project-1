@@ -8,7 +8,7 @@ export const renderPlaceholders = (count, Component, isRender) => {
 
 const ShopByCategory = () => {
   const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/categories")
-  console.log("data", data)
+  // console.log("data", data)
 
   return (
     <section id="shopByCategory" className="bg-white px-5 py-4">

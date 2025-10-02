@@ -45,12 +45,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <ProductProvider> */}
+    <WishlistProvider>
       <CartProvider>
-        <WishlistProvider>
+        <ProductProvider>
           <RouterProvider router={router} />
-        </WishlistProvider>
+        </ProductProvider>
       </CartProvider>
-    {/* </ProductProvider> */}
+    </WishlistProvider>
   </StrictMode>,
 )

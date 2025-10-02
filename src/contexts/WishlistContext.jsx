@@ -42,7 +42,7 @@ export function WishlistProvider({ children }) {
             // const data = await response.json()
             incrementWishlistCount()
         } catch (error) {
-            console.log("error", error)
+            console.error("error", error)
         }
     }
 
@@ -60,7 +60,7 @@ export function WishlistProvider({ children }) {
             // const data = await response.json()
             decrementWishListCount()
         } catch (error) {
-            console.log("error", error)
+            console.error("error", error)
         }
     }
 

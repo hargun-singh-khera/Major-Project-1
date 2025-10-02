@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom"
 import { useWishlistContext } from "../contexts/WishlistContext"
 import { useCartContext } from "../contexts/CartContext"
-const Header = ({ setSearchQuery }) => {
+import { useProductContext } from "../contexts/ProductContext"
+const Header = () => {
   const { wishlistCount } = useWishlistContext()
-  const { cartCount } = useCartContext()
+  const { cart } = useCartContext()
+  const { setSearchQuery } = useProductContext()
+
+  const cartCount = cart?.length
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value)
@@ -13,7 +17,7 @@ const Header = ({ setSearchQuery }) => {
     <header>
       <nav className="navbar navbar-expand-lg bg-white py-lg-0">
         <div className="container">
-          <Link className="navbar-brand" to="/">MyShoppingSite</Link>
+          <Link className="navbar-brand" to="/">Trendyne</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
