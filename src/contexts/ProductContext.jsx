@@ -1,6 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import CartContext, { useCartContext } from "./CartContext";
-import WishlistContext, { useWishlistContext } from "./WishlistContext";
 import useFetch from "../useFetch";
 
 const ProductContext = createContext()
@@ -11,8 +9,7 @@ export default ProductContext
 
 export function ProductProvider({ children }) {
     const { data } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
-    // const { data } = useFetch(`http://localhost:3000/api/products`)
-    
+
     const DEFAULT_MAX_PRICE = 2500
     
     const [products, setProducts] = useState([])
@@ -22,12 +19,18 @@ export function ProductProvider({ children }) {
     const [rating, setRating] = useState(0)
     const [price, setPrice] = useState(2500)
     const [sortedProducts, setSortedProducts] = useState("")
+    const [season, setSeason] = useState("")
+    const [discount, setDiscount] = useState(0)
+    const [selectedCategory, setSelectedCategory] = useState("")
 
     useEffect(() => {
-        if (data) {
+        if(data) {
             setProducts(data)
         }
     }, [data])
+
+    console.log("products", products, "filteredProducts", filteredProducts)
+    console.log("category", category)
 
     function filterProducts () {
         if(!products || products.length === 0) return
@@ -52,7 +55,12 @@ export function ProductProvider({ children }) {
         if (sortedProducts === "desc") {
             filtered = filtered.sort((a, b) => b.discountedPrice - a.discountedPrice)
         }
-
+        if(season !== "") {
+            filtered = filtered.filter(product => product.season === season)
+        }
+        if(discount > 0) {
+            filtered = filtered.filter(product => product.discount >= discount)
+        }
         setFilteredProducts(filtered)
     }
 
@@ -62,14 +70,16 @@ export function ProductProvider({ children }) {
         setPrice(DEFAULT_MAX_PRICE)
         setSortedProducts("")
         setFilteredProducts(products)
+        setSeason("")
+        setDiscount(0)
     }
 
     useEffect(() => {
         filterProducts()
-    }, [category, rating, sortedProducts, price, searchQuery])
+    }, [products, category, rating, sortedProducts, price, searchQuery, season, discount])
 
     return (
-        <ProductContext.Provider value={{ filteredProducts, setFilteredProducts, filterProducts, searchQuery, setSearchQuery, category, setCategory, rating, setRating, price, setPrice, sortedProducts, setSortedProducts, clearFilter }}>
+        <ProductContext.Provider value={{ selectedCategory, setSelectedCategory, season, setSeason, discount, setDiscount, setProducts, filteredProducts, setFilteredProducts, filterProducts, searchQuery, setSearchQuery, category, setCategory, rating, setRating, price, setPrice, sortedProducts, setSortedProducts, clearFilter }}>
             {children}
         </ProductContext.Provider>
     )

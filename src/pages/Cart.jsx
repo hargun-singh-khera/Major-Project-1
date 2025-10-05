@@ -17,6 +17,8 @@ const Cart = () => {
     }
   }, [data])
   
+
+  
   const handleRemoveFromCart = async (e, cartId, productId) => {
     await removeItemFromCart(cartId, productId)
   }
@@ -34,7 +36,7 @@ const Cart = () => {
         <h4 className="text-center mb-3">My Cart ({cart?.length || 0})</h4>
         {loading && <PlaceholderCart />}
         {error && <p>Something went wrong while loading cart. Please try again later.</p>}
-        {!loading && !error && cart?.length === 0 && <p>Looks like your cart is empty. Please add some products to your cart.</p>}
+        {cart?.length === 0 && <p>Looks like your cart is empty. Please add some products to your cart.</p>}
         {cart && cart.length > 0 && (
           <div className="row justify-content-center">
             <div className="col-lg-6">
@@ -42,7 +44,7 @@ const Cart = () => {
                 <div key={cartItem._id} className="card mb-3 border-0" >
                   <div className="row g-0">
                     <div className="col-lg-6">
-                      <img src="https://templates.hibootstrap.com/xton/default/assets/img/products/img4.jpg" className="img-fluid h-100 w-100 object-fit-cover" alt="..." />
+                      <img src={cartItem.productId.imageUrl} className="img-fluid h-100 w-100 object-fit-cover" alt="..." />
                     </div>
                     <div className="col-lg-6 py-xl-5 py-lg-4 py-md-3">
                       <div className="card-body">

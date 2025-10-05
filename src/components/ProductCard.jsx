@@ -7,14 +7,18 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const { _id: productId, category, name, price, discountedPrice, discount, rating, isNew, imageUrl, stockItems, isWishlisted, isAddedToCart } = product
-  // console.log("product", product)
 
   const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
   const { addItemToCart } = useCartContext()
 
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
   const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
-
+  
+  useEffect(() => {
+    setIsAddToWishlist(isWishlisted)
+    setIsAddToCart(isAddedToCart)
+  }, [isWishlisted, isAddToCart])
+  
   const handleFavClick = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -45,10 +49,10 @@ const ProductCard = ({ product }) => {
   
   return (
     <div className="col">
-      <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
+      <Link to={`/shop/products/${category}/${productId}`} className="text-decoration-none">
         <div className="card border-0 rounded">
           <div className="position-relative">
-            <img src={imageUrl} className="card-img-top object-fit-cover img-fluid" alt="..." />
+            <img src={imageUrl} className="card-img-top object-fit-cover object-center img-fluid" alt="..." />
             <div className="my-2 me-2 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
               {isAddToWishlist ? (
                 <svg onClick={handleFavClick} xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z"/></svg>

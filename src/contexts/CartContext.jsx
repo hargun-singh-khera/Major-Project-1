@@ -11,6 +11,7 @@ export function CartProvider({ children }) {
     const userId = "68cab48b2c77561237bcf9f0"
     const { data } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}`)
 
+
     const [cart, setCart] = useState([])
     const DELIVERY_CHARGES = 499
     
@@ -50,7 +51,7 @@ export function CartProvider({ children }) {
 
     async function addItemToCart(productId) {
         try {
-            const response = await fetch(`http://localhost:3000/api/cart/${userId}/${productId}`, {
+            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -63,7 +64,7 @@ export function CartProvider({ children }) {
             // console.log("Cart added data", data)
             setCart((prevCart) => ([...prevCart, data.newCartItem]))
         } catch (error) {
-            console.log("error", error)
+            console.log("error", error, error.message)
         }
     }
 

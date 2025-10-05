@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom"
+import { useProductContext } from "../contexts/ProductContext"
+
 const ShopByArrivals = () => {
+  const { setSeason } = useProductContext()
   return (
     <section id="shopByArrivals" >
       <div className="row my-5">
@@ -13,7 +17,7 @@ const ShopByArrivals = () => {
                   <p className="card-title mb-3">NEW ARRIVALS</p>
                   <h5>Summer Collection</h5>
                   <p className="card-text ">Check out our best summer collection to stay cool in style this seasion.</p>
-                  <a className="btn btn-outline-success px-5 py-2" href="#shopByCategory">Shop Now</a>
+                  <Link onClick={() => setSeason("Summer")} to={"/products"} className="btn btn-outline-success px-5 py-2" href="#shopByCategory">Shop Now</Link>
                 </div>
               </div>
             </div>
@@ -30,7 +34,7 @@ const ShopByArrivals = () => {
                   <p className="card-title mb-3">NEW ARRIVALS</p>
                   <h5>Winter Collection</h5>
                   <p className="card-text ">Check out our best winter collection to stay warm in style this seasion.</p>
-                  <a className="btn btn-outline-success px-5 py-2" href="#shopByCategory">Shop Now</a>
+                  <Link onClick={() => setSeason("Winter")} to={"/products"} className="btn btn-outline-success px-5 py-2" href="#shopByCategory">Shop Now</Link>
                 </div>
               </div>
             </div>
