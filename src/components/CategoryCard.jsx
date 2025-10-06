@@ -3,7 +3,7 @@ import { useProductContext } from "../contexts/ProductContext"
 const CategoryCard = ({category}) => {
   const {name, imageUrl} = category
   const { setCategory } = useProductContext()
-
+  // console.log("category of category card", cat)
   return (
     <div className="col-lg-4">
       <Link onClick={() => setCategory([name])} to={`/shop/products`} className="text-decoration-none">

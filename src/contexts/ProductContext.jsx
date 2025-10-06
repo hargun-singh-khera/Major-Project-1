@@ -29,8 +29,8 @@ export function ProductProvider({ children }) {
         }
     }, [data])
 
-    console.log("products", products, "filteredProducts", filteredProducts)
-    console.log("category", category)
+    // console.log("products", products, "filteredProducts", filteredProducts)
+    // console.log("category", category, "selectedCategory", selectedCategory)
 
     function filterProducts () {
         if(!products || products.length === 0) return
@@ -40,8 +40,8 @@ export function ProductProvider({ children }) {
         if (searchQuery !== "") {
             filtered = filtered.filter(product => (product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.title.toLowerCase().includes(searchQuery.toLowerCase())))
         }
-        if (category.length > 0) {
-            filtered = filtered.filter(product => category.includes(product.category))
+        if (category.length > 0 || selectedCategory !== "") {
+            filtered = filtered.filter(product => category.includes(product.category) || product.category === selectedCategory)
         }
         if (rating > 0) {
             filtered = filtered.filter(product => product.rating >= rating)
@@ -76,7 +76,7 @@ export function ProductProvider({ children }) {
 
     useEffect(() => {
         filterProducts()
-    }, [products, category, rating, sortedProducts, price, searchQuery, season, discount])
+    }, [products, category, rating, sortedProducts, price, searchQuery, season, discount, selectedCategory])
 
     return (
         <ProductContext.Provider value={{ selectedCategory, setSelectedCategory, season, setSeason, discount, setDiscount, setProducts, filteredProducts, setFilteredProducts, filterProducts, searchQuery, setSearchQuery, category, setCategory, rating, setRating, price, setPrice, sortedProducts, setSortedProducts, clearFilter }}>

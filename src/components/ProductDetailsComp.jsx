@@ -2,6 +2,8 @@ import ProductBuyingBenefits from './ProductBuyingBenefits.jsx';
 import { useEffect, useState } from 'react';
 import { useWishlistContext } from '../contexts/WishlistContext.jsx';
 import { useCartContext } from '../contexts/CartContext.jsx';
+import PlaceholderCard from "../components/PlaceholderCard"
+import { renderPlaceholders } from "../components/ShopByCategory"
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard.jsx';
 import { useProductContext } from '../contexts/ProductContext.jsx';
@@ -16,9 +18,10 @@ const ProductDetailsComp = ({ product }) => {
   const [quantity, setQuantity] = useState(1)
   const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
   const [sizeSelected, setSizeSelected] = useState(size[0])
+  const [loading, setLoading] = useState(true)
 
   const { filteredProducts: products, setSelectedCategory} = useProductContext()
-  console.log("Fproducts", products)
+  // console.log("Fproducts", products, "cateogory of product details", cat, "selectedCategory", selectedCategory)
 
   const handleFavClick = async (e) => {
     e.preventDefault()
@@ -45,9 +48,10 @@ const ProductDetailsComp = ({ product }) => {
   }
 
   useEffect(() => {
-    console.log("Product details useEffect triggered")
+    // console.log("Product details useEffect triggered")
     window.scrollTo(0, 0)
-    setSelectedCategory([category])
+    setSelectedCategory(category)
+    setTimeout(() => setLoading(false), 1000)
   }, [])
 
   const randomIndex = Math.floor(Math.random() * (products.length-1))
@@ -59,7 +63,7 @@ const ProductDetailsComp = ({ product }) => {
         <div className="col-lg-4 p-3 position-relative">
           <img
             src={imageUrl}
-            className="img-fluid"
+            className="img-fluid object-fit-cover object-center w-100"
             alt={name}
           />
           <div className="my-4 me-4 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
@@ -80,9 +84,12 @@ const ProductDetailsComp = ({ product }) => {
           <div className="card-body">
             <h3 className="card-title ">{name}</h3>
             <h5 className="card-text text-body-tertiary">{title}</h5>
-            <div className="d-flex gap-1 mb-4">
+            <div className="d-flex gap-1 mb-1">
               {rating}
               <i className="bi bi-star-fill text-warning"></i>
+            </div>
+            <div className="mb-4">
+              <span className={stockItems === 0 || stockItems <= 5 ? "text-danger" : "text-success"}>{stockItems === 0 ? "Out of Stock" : stockItems <= 5 ? "Limited stock left" : "In Stock"}</span>
             </div>
             <hr />
             <div className="d-flex align-items-center gap-4">
@@ -117,7 +124,7 @@ const ProductDetailsComp = ({ product }) => {
                   <button
                     onClick={() => setSizeSelected(item)}
                     key={index}
-                    className={`btn ${sizeSelected === item ? "btn-outline-success" : "btn-outline-secondary"} rounded-circle px-3 p-2`}
+                    className={`btn ${sizeSelected === item ? "btn-outline-success" : "btn-outline-secondary"} rounded-2 px-3 p-2`}
                   >
                     {item}
                   </button>
@@ -139,7 +146,8 @@ const ProductDetailsComp = ({ product }) => {
             </div>
           </div>
         </div>
-        {products && products.length > 0 && (
+        {loading && <div className="row row-cols-1 row-cols-md-4 g-4 my-2">{renderPlaceholders(4, PlaceholderCard)}</div>}
+        {!loading && products && products.length > 0 && (
           <div className="p-3">
             <hr />
             <h3 className="fs-4 fw-semibold">

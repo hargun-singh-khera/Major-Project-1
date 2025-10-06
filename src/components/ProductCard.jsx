@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
   useEffect(() => {
     setIsAddToWishlist(isWishlisted)
     setIsAddToCart(isAddedToCart)
-  }, [isWishlisted, isAddToCart])
+  }, [isWishlisted, isAddedToCart])
   
   const handleFavClick = async (e) => {
     e.preventDefault()
@@ -46,10 +46,12 @@ const ProductCard = ({ product }) => {
       navigate("/cart")
     }
   }
+
+  // console.log("isAddToCart", isAddToCart, productId)
   
   return (
     <div className="col">
-      <Link to={`/shop/products/${category}/${productId}`} className="text-decoration-none">
+      <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
         <div className="card border-0 rounded">
           <div className="position-relative">
             <img src={imageUrl} className="card-img-top object-fit-cover object-center img-fluid" alt="..." />

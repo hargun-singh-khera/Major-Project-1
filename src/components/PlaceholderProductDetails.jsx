@@ -1,6 +1,3 @@
-import PlaceholderCard from "../components/PlaceholderCard"
-import { renderPlaceholders } from "../components/ShopByCategory"
-
 const PlaceholderProductDetails = () => {
   return (
     <div className="card mb-3 border-0" >
@@ -56,7 +53,6 @@ const PlaceholderProductDetails = () => {
           </div>
         </div>
       </div>
-      <div className="row row-cols-1 row-cols-md-4 g-4 my-2">{renderPlaceholders(4, PlaceholderCard)}</div>
     </div>
   )
 }
