@@ -43,7 +43,7 @@ const ProductDetailsComp = ({ product }) => {
       setIsAddToCart(true)
     }
     else {
-      navigate("/cart")
+      navigate("/checkout/cart")
     }
   }
 
@@ -124,7 +124,7 @@ const ProductDetailsComp = ({ product }) => {
                   <button
                     onClick={() => setSizeSelected(item)}
                     key={index}
-                    className={`btn ${sizeSelected === item ? "btn-outline-success" : "btn-outline-secondary"} rounded-2 px-3 p-2`}
+                    className={`btn ${sizeSelected === item ? "btn-outline-primary" : "btn-outline-secondary"} rounded-2 px-3 p-2`}
                   >
                     {item}
                   </button>

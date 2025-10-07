@@ -14,7 +14,7 @@ const ShopByBanner = () => {
               <h6 className="text-uppercase small">Limited Time Offer!</h6>
               <h2 className="display-6 fw-semibold">OFF {DISCOUNT}%-</h2>
               <p className="mb-3">Get the best deals now.</p>
-              <Link onClick={() => setDiscount(DISCOUNT)} to={"/products"} className="btn text-white p-auto" style={{backgroundColor: "#f53f85"}} href="#shopByCategory">Discover Now</Link>
+              <Link onClick={() => setDiscount(DISCOUNT)} to={"/shop/products"} className="btn text-white p-auto" style={{backgroundColor: "#f53f85"}} href="#shopByCategory">Discover Now</Link>
             </div>
           </div>
         </div>

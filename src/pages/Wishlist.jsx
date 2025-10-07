@@ -74,7 +74,7 @@ const Wishlist = () => {
                       <p className="mb-0 text-danger-emphasis">({product.productId.discount}% OFF)</p>
                     </div>
                   </div>  
-                  <button onClick={(e) => handleMoveToCart(e, product.productId._id)} className="btn btn-secondary rounded-top-0 w-100">Move to Cart</button>
+                  <button onClick={(e) => handleMoveToCart(e, product.productId._id)} className="btn btn-secondary rounded-top-0 w-100">Move to Bag</button>
                 </div>
               </Link>
             </div>))}

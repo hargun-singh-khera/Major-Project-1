@@ -6,19 +6,21 @@ import { useWishlistContext } from "../contexts/WishlistContext";
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
-  const { _id: productId, category, name, price, discountedPrice, discount, rating, isNew, imageUrl, stockItems, isWishlisted, isAddedToCart } = product
+  const { _id: productId, category, name, title, price, size, discountedPrice, discount, rating, isNew, imageUrl, stockItems, isWishlisted, isAddedToCart } = product
 
   const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
   const { addItemToCart } = useCartContext()
 
+  const [sizeSelected, setSizeSelected] = useState(size[0])
+  
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
   const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
-  
+
   useEffect(() => {
     setIsAddToWishlist(isWishlisted)
     setIsAddToCart(isAddedToCart)
   }, [isWishlisted, isAddedToCart])
-  
+
   const handleFavClick = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -37,18 +39,18 @@ const ProductCard = ({ product }) => {
     e.preventDefault()
     e.stopPropagation()
     console.log("handle cart clicked")
-    if(!isAddToCart) {
+    if (!isAddToCart) {
       // add item to cart
       await addItemToCart(productId)
       setIsAddToCart(true)
     }
     else {
-      navigate("/cart")
+      navigate("/checkout/cart")
     }
   }
 
   // console.log("isAddToCart", isAddToCart, productId)
-  
+
   return (
     <div className="col">
       <Link to={`/products/${category}/${productId}`} className="text-decoration-none">
@@ -57,7 +59,7 @@ const ProductCard = ({ product }) => {
             <img src={imageUrl} className="card-img-top object-fit-cover object-center img-fluid" alt="..." />
             <div className="my-2 me-2 position-absolute top-0 end-0 rounded-circle bg-white p-2 d-flex justify-content-center align-items-center">
               {isAddToWishlist ? (
-                <svg onClick={handleFavClick} xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z"/></svg>
+                <svg onClick={handleFavClick} xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e81717"><path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Z" /></svg>
               ) : (
                 <span onClick={handleFavClick} className="material-symbols-outlined fs-5">
                   favorite
@@ -68,7 +70,7 @@ const ProductCard = ({ product }) => {
             <span className="position-absolute bottom-0 start-0 mb-2 ms-2 badge rounded-pill text-bg-light">
               <i className="bi bi-star-fill text-warning"></i> {rating}
             </span>
-            {stockItems <= 5 && <span style={{ fontSize: "10px"}} className="position-absolute bottom-0 end-0 mb-2 mx-2 badge rounded-pill text-bg-danger">Only {stockItems} left!</span>}
+            {stockItems <= 5 && <span style={{ fontSize: "10px" }} className="position-absolute bottom-0 end-0 mb-2 mx-2 badge rounded-pill text-bg-danger">Only {stockItems} left!</span>}
           </div>
           <div className="card-body">
             <h5 className="card-title text-body-secondary">{name}</h5>
@@ -86,7 +88,64 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </Link>
-      <button type="button" onClick={handleAddToCart} className={`btn ${isAddToCart ? "btn-primary" : "btn-secondary"}  rounded-top-0 w-100`}>{isAddToCart ? "Go to Cart" : "Add to Cart"}</button>
+      {
+        isAddToCart ? (
+          <Link to={"/checkout/cart"} className="btn btn-primary rounded-top-0 w-100">Go to Bag</Link>
+        ) : (
+          <button type="button" data-bs-toggle="modal" data-bs-target={`#addToCartModal-${productId}`} className="btn btn-secondary rounded-top-0 w-100">Add to Bag</button>
+        )
+      }
+      <div className="modal fade" id={`addToCartModal-${productId}`} tabIndex="-1" aria-labelledby={`addToCartModalLabel-${productId}`} aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <div className="card border-0 mb-3">
+                <div className="row g-0">
+                  <div className="col-md-2">
+                    <img src={imageUrl} className="img-fluid rounded-start object-fit-cover" alt="..." />
+                  </div>
+                  <div className="col-md-8 p-0">
+                    <div className="card-body">
+                      <h5 className="card-title m-0">{name}</h5>
+                      <h6 className="card-text text-body-tertiary">{title.slice(0, 32)}...</h6>
+                      <div className="d-flex gap-2 align-items-center">
+                        {discount > 0 ? (
+                          <>
+                            <h5 className="card-text mb-0">₹{discountedPrice}</h5>
+                            <h6 className="card-text text-decoration-line-through fw-lighter mb-0">₹{price}</h6>
+                            <p className="mb-0 text-danger-emphasis">({discount}% OFF)</p>
+                          </>
+                        ) : (
+                          <h5 className="card-text mb-0">₹{discountedPrice}</h5>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+            </div>
+            <div className="modal-body">
+              <h5 className="card-text fs-6 ">Select Size</h5>
+              <div className="d-flex flex-wrap gap-4 ms-2">
+                {size.map((item, index) => (
+                  <button
+                    onClick={() => setSizeSelected(item)}
+                    key={index}
+                    className={`btn ${sizeSelected === item ? "btn-outline-primary" : "btn-outline-secondary"} rounded-2 px-3 p-2`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+              <button onClick={handleAddToCart} type="button" className="btn btn-success px-4" data-bs-dismiss="modal">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

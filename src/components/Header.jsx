@@ -58,7 +58,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="btn d-flex flex-column" to="/cart">
+                  <Link className="btn d-flex flex-column" to="/checkout/cart">
                     <div className="position-relative">
                       <span className="material-symbols-outlined fs-5">
                         local_mall
