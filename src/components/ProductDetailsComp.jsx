@@ -39,7 +39,7 @@ const ProductDetailsComp = ({ product }) => {
 
   const handleAddToCart = async (e) => {
     if (!isAddToCart) {
-      await addItemToCart(productId)
+      await addItemToCart(productId, sizeSelected)
       setIsAddToCart(true)
     }
     else {

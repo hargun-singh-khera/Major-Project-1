@@ -7,6 +7,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 import { useWishlistContext } from "../contexts/WishlistContext"
 import { useCartContext } from "../contexts/CartContext"
+import AddToCartModal from "../components/AddToCartModal"
 
 const Wishlist = () => {
   const userId = "68cab48b2c77561237bcf9f0"
@@ -14,6 +15,8 @@ const Wishlist = () => {
   // const { data, loading, error } = useFetch(`http://localhost:3000/api/wishlists/${userId}`)
 
   // console.log("data", data)
+  const [sizeSelected, setSizeSelected] = useState("")
+  const [sizeError, setSizeError] = useState("")
 
   const { removeItemFromWishlist } = useWishlistContext()
   const { addItemToCart } = useCartContext()
@@ -34,9 +37,13 @@ const Wishlist = () => {
   }
 
   const handleMoveToCart = async (e, productId) => {
-    e.preventDefault()
-    e.stopPropagation()
-    await addItemToCart(productId)
+    // e.preventDefault()
+    // e.stopPropagation()
+    if(sizeSelected === "") {
+      setSizeError("Please select a size")
+      return
+    }
+    await addItemToCart(productId, sizeSelected)
     setWishlistData((prevProduct) => prevProduct.filter(product => product.productId._id !== productId))
   }
 
@@ -74,7 +81,8 @@ const Wishlist = () => {
                       <p className="mb-0 text-danger-emphasis">({product.productId.discount}% OFF)</p>
                     </div>
                   </div>  
-                  <button onClick={(e) => handleMoveToCart(e, product.productId._id)} className="btn btn-secondary rounded-top-0 w-100">Move to Bag</button>
+                  <button type="button" onClick={(e) => {e.preventDefault(); e.stopPropagation();}} data-bs-toggle="modal" data-bs-target={`#addToCartModal-${product.productId._id}`} className="btn btn-secondary rounded-top-0 w-100">Move to Bag</button>
+                  <AddToCartModal productId={product.productId._id} imageUrl={product.productId.imageUrl} name={product.productId.name} title={product.productId.title} price={product.productId.price} discount={product.productId.discount} discountedPrice={Math.round(product.productId.price * (100-product.productId.discount)/100)} size={product.productId.size} sizeSelected={sizeSelected} setSizeSelected={setSizeSelected} sizeError={sizeError} onClick={(e) => handleMoveToCart(e, product.productId._id)} />
                 </div>
               </Link>
             </div>))}

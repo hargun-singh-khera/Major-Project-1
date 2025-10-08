@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useCartContext } from "../contexts/CartContext";
 import { useWishlistContext } from "../contexts/WishlistContext";
+import AddToCartModal from "./AddToCartModal";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -11,7 +12,8 @@ const ProductCard = ({ product }) => {
   const { addItemToWishlist, removeItemFromWishlist } = useWishlistContext()
   const { addItemToCart } = useCartContext()
 
-  const [sizeSelected, setSizeSelected] = useState(size[0])
+  const [sizeSelected, setSizeSelected] = useState("")
+  const [sizeError, setSizeError] = useState("")
   
   const [isAddToWishlist, setIsAddToWishlist] = useState(isWishlisted)
   const [isAddToCart, setIsAddToCart] = useState(isAddedToCart)
@@ -36,12 +38,16 @@ const ProductCard = ({ product }) => {
   }
 
   const handleAddToCart = async (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+    // e.preventDefault()
+    // e.stopPropagation()
     console.log("handle cart clicked")
+    if(sizeSelected === "") {
+      setSizeError("Please select a size")
+      return
+    }
     if (!isAddToCart) {
       // add item to cart
-      await addItemToCart(productId)
+      await addItemToCart(productId, sizeSelected)
       setIsAddToCart(true)
     }
     else {
@@ -95,57 +101,7 @@ const ProductCard = ({ product }) => {
           <button type="button" data-bs-toggle="modal" data-bs-target={`#addToCartModal-${productId}`} className="btn btn-secondary rounded-top-0 w-100">Add to Bag</button>
         )
       }
-      <div className="modal fade" id={`addToCartModal-${productId}`} tabIndex="-1" aria-labelledby={`addToCartModalLabel-${productId}`} aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <div className="card border-0 mb-3">
-                <div className="row g-0">
-                  <div className="col-md-2">
-                    <img src={imageUrl} className="img-fluid rounded-start object-fit-cover" alt="..." />
-                  </div>
-                  <div className="col-md-8 p-0">
-                    <div className="card-body">
-                      <h5 className="card-title m-0">{name}</h5>
-                      <h6 className="card-text text-body-tertiary">{title.slice(0, 32)}...</h6>
-                      <div className="d-flex gap-2 align-items-center">
-                        {discount > 0 ? (
-                          <>
-                            <h5 className="card-text mb-0">₹{discountedPrice}</h5>
-                            <h6 className="card-text text-decoration-line-through fw-lighter mb-0">₹{price}</h6>
-                            <p className="mb-0 text-danger-emphasis">({discount}% OFF)</p>
-                          </>
-                        ) : (
-                          <h5 className="card-text mb-0">₹{discountedPrice}</h5>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
-            </div>
-            <div className="modal-body">
-              <h5 className="card-text fs-6 ">Select Size</h5>
-              <div className="d-flex flex-wrap gap-4 ms-2">
-                {size.map((item, index) => (
-                  <button
-                    onClick={() => setSizeSelected(item)}
-                    key={index}
-                    className={`btn ${sizeSelected === item ? "btn-outline-primary" : "btn-outline-secondary"} rounded-2 px-3 p-2`}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
-              <button onClick={handleAddToCart} type="button" className="btn btn-success px-4" data-bs-dismiss="modal">Confirm</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AddToCartModal productId={productId} imageUrl={imageUrl} name={name} title={title} price={price} discount={discount} discountedPrice={discountedPrice} size={size} sizeSelected={sizeSelected} setSizeSelected={setSizeSelected} sizeError={sizeError} onClick={handleAddToCart} />
     </div>
   )
 }

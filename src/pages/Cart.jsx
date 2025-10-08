@@ -36,8 +36,8 @@ const Cart = () => {
         <h4 className="text-center mb-3">My Cart ({cart?.length || 0})</h4>
         {loading && <PlaceholderCart />}
         {error && <p>Something went wrong while loading cart. Please try again later.</p>}
-        {cart?.length === 0 && <p>Looks like your cart is empty. Please add some products to your cart.</p>}
-        {cart && cart.length > 0 && (
+        {!loading && cart?.length === 0 && <p>Looks like your cart is empty. Please add some products to your cart.</p>}
+        {!loading && cart && cart.length > 0 && (
           <div className="row justify-content-center">
             <div className="col-lg-6">
               {cart.map(cartItem => (
@@ -65,6 +65,10 @@ const Cart = () => {
                           <button onClick={() => decreaseQuantity(cartItem._id)} className="btn btn-sm btn-outline-secondary rounded-4">-</button>
                           {getCartQuantity(cartItem._id)}
                           <button onClick={() => increaseQuantity(cartItem._id)} className="btn btn-sm btn-outline-secondary rounded-4">+</button>
+                        </div>
+                        <div className="d-flex gap-3 my-3">
+                          <span><strong>Size:</strong></span>
+                          <p>{cartItem.size}</p>
                         </div>
                         <button onClick={(e) => handleRemoveFromCart(e, cartItem._id, cartItem.productId._id)} className="btn btn-secondary mb-2 w-100 rounded-0">Remove From Cart</button>
                         <button onClick={(e) => handleMoveToWishlist(e, cartItem._id, cartItem.productId._id)} className="btn btn-outline-secondary w-100 rounded-0">Move to Wishlist</button>
