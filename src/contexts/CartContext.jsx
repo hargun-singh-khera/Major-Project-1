@@ -50,9 +50,8 @@ export function CartProvider({ children }) {
     }
 
     async function addItemToCart(productId, size, quantity=1) {
-        // https://neo-g-backend-jwhg.vercel.app/api/cart
         try {
-            const response = await fetch(`http://localhost:3000/api/cart/${userId}/${productId}`, {
+            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
