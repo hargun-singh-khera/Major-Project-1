@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard.jsx';
 import { useProductContext } from '../contexts/ProductContext.jsx';
 
-const ProductDetailsComp = ({ product }) => {
+const ProductDetailsComp = ({ product, toast }) => {
   const navigate = useNavigate()
   const { _id: productId, name, title, imageUrl, price, category, rating, discount, discountedPrice, stockItems, size, description, isWishlisted, isAddedToCart } = product;
 
@@ -29,10 +29,12 @@ const ProductDetailsComp = ({ product }) => {
     if (!isAddToWishlist) {
       // add item to wishlist
       await addItemToWishlist(productId)
+      toast.success("Item added to wishlist")
     }
     else {
       // remove wishlisted item
       await removeItemFromWishlist(productId)
+      toast.success("Item removed from wishlist")
     }
     setIsAddToWishlist(!isAddToWishlist)
   }
@@ -41,6 +43,7 @@ const ProductDetailsComp = ({ product }) => {
     if (!isAddToCart) {
       await addItemToCart(productId, sizeSelected)
       setIsAddToCart(true)
+      toast.success("Item added to bag")
     }
     else {
       navigate("/checkout/cart")
@@ -60,7 +63,7 @@ const ProductDetailsComp = ({ product }) => {
   return (
     <div className="card mb-3 border-0">
       <div className="row g-0">
-        <div className="col-lg-4 p-3 position-relative">
+        <div className="col-lg-4 p-3 position-relative sticky-top">
           <img
             src={imageUrl}
             className="img-fluid object-fit-cover object-center w-100"
@@ -80,7 +83,7 @@ const ProductDetailsComp = ({ product }) => {
           </button>
           <button onClick={handleAddToCart} className="btn btn-secondary w-100">{isAddToCart ? "Go to Cart" : "Add to Cart"}</button>
         </div>
-        <div className="col-lg-6 px-4">
+        <div className="col-lg-6 px-4 ">
           <div className="card-body">
             <h3 className="card-title ">{name}</h3>
             <h5 className="card-text text-body-tertiary">{title}</h5>
@@ -154,7 +157,7 @@ const ProductDetailsComp = ({ product }) => {
               More items you may like in apparel
             </h3>
             <div className="row row-cols-1 row-cols-md-4 g-4 my-2">
-              {products.filter(product => product._id !== productId).slice(Math.min(randomIndex, products.length - 1 - fixedLength), randomIndex + fixedLength).map(item => <ProductCard key={item._id} product={item} />).filter(product => product._id !== productId)}
+              {products.filter(product => product._id !== productId).slice(Math.min(randomIndex, products.length - 1 - fixedLength), randomIndex + fixedLength).map(item => <ProductCard key={item._id} product={item} />)}
             </div>
           </div>
         )}

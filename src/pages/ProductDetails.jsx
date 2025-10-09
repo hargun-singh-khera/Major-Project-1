@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import useFetch from "../useFetch"
 import ProductDetailsComp from "../components/ProductDetailsComp"
 import PlaceholderProductDetails from "../components/PlaceholderProductDetails"
+import toast, { Toaster } from 'react-hot-toast'
 
 const ProductDetails = () => {
   const { productId } = useParams()
@@ -16,7 +17,8 @@ const ProductDetails = () => {
       <main className="container my-4 ">
         {loading && <PlaceholderProductDetails />}
         {error && <p>Something went wrong while loading product details. Please try again later.</p>}
-        {!loading && !error && data && <ProductDetailsComp product={data} />}
+        {!loading && !error && data && <ProductDetailsComp product={data} toast={toast} />}
+        <Toaster />
       </main>
     </>
   )

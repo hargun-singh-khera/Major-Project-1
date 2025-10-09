@@ -8,6 +8,7 @@ import { useEffect } from "react"
 import { useWishlistContext } from "../contexts/WishlistContext"
 import { useCartContext } from "../contexts/CartContext"
 import AddToCartModal from "../components/AddToCartModal"
+import toast, { Toaster } from 'react-hot-toast'
 
 const Wishlist = () => {
   const userId = "68cab48b2c77561237bcf9f0"
@@ -34,6 +35,7 @@ const Wishlist = () => {
     e.stopPropagation()
     await removeItemFromWishlist(productId)
     setWishlistData((prevProduct) => prevProduct.filter(product => product.productId._id !== productId))
+    toast.success("Item deleted from wishlist")
   }
 
   const handleMoveToCart = async (e, productId) => {
@@ -45,6 +47,7 @@ const Wishlist = () => {
     }
     await addItemToCart(productId, sizeSelected)
     setWishlistData((prevProduct) => prevProduct.filter(product => product.productId._id !== productId))
+    toast.success("Item moved to bag")
   }
 
   return (
@@ -87,6 +90,7 @@ const Wishlist = () => {
               </Link>
             </div>))}
         </div>
+        <Toaster />
       </main>
     </>
   )

@@ -6,6 +6,7 @@ import PlaceholderCard from "../components/PlaceholderCard"
 import { useEffect, useState } from "react"
 import { useProductContext } from "../contexts/ProductContext"
 import useFetch from "../useFetch"
+import toast, { Toaster } from 'react-hot-toast'
 
 const Products = () => {
   const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
@@ -53,11 +54,12 @@ const Products = () => {
             {/* {searchQuery === "" && products && products.length === 0 && <p>No matching products.</p>} */}
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
               {!loading && products && products.length > 0 && products.map(product => (
-                <ProductCard key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} toast={toast} />
               ))}
             </div>
           </div>
         </div>
+        <Toaster />
       </main>
     </>
   )

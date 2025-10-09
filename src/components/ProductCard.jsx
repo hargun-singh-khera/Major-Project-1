@@ -4,7 +4,8 @@ import { useCartContext } from "../contexts/CartContext";
 import { useWishlistContext } from "../contexts/WishlistContext";
 import AddToCartModal from "./AddToCartModal";
 
-const ProductCard = ({ product }) => {
+
+const ProductCard = ({ product, toast }) => {
   const navigate = useNavigate();
 
   const { _id: productId, category, name, title, price, size, discountedPrice, discount, rating, isNew, imageUrl, stockItems, isWishlisted, isAddedToCart } = product
@@ -29,10 +30,12 @@ const ProductCard = ({ product }) => {
     if (!isAddToWishlist) {
       // add item to wishlist
       await addItemToWishlist(productId)
+      toast.success("Item added to wishlist")
     }
     else {
       // remove wishlisted item
       await removeItemFromWishlist(productId)
+      toast.success("Item removed from wishlist")
     }
     setIsAddToWishlist(!isAddToWishlist)
   }
@@ -49,6 +52,7 @@ const ProductCard = ({ product }) => {
       // add item to cart
       await addItemToCart(productId, sizeSelected)
       setIsAddToCart(true)
+      toast.success("Item added to bag")
     }
     else {
       navigate("/checkout/cart")

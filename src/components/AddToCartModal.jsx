@@ -12,7 +12,7 @@ const AddToCartModal = ({ productId, imageUrl, name, title, price, discount, dis
                                     <img src={imageUrl} className="img-fluid rounded-start object-fit-cover" alt="..." />
                                 </div>
                                 <div className="col-md-8 p-0">
-                                    <div className="card-body">
+                                    <div className="card-body px-0 px-md-3">
                                         <h5 className="card-title m-0">{name}</h5>
                                         <h6 className="card-text text-body-tertiary">{title.slice(0, 32)}...</h6>
                                         <div className="d-flex gap-2 align-items-center">

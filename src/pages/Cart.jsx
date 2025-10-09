@@ -4,6 +4,7 @@ import { useCartContext } from "../contexts/CartContext"
 import { useWishlistContext } from "../contexts/WishlistContext"
 import useFetch from "../useFetch"
 import PlaceholderCart from "../components/PlaceholderCart"
+import toast, { Toaster } from 'react-hot-toast'
 
 const Cart = () => {  
   const userId = "68cab48b2c77561237bcf9f0"
@@ -17,15 +18,16 @@ const Cart = () => {
     }
   }, [data])
   
-
   
   const handleRemoveFromCart = async (e, cartId, productId) => {
     await removeItemFromCart(cartId, productId)
+    toast.success("Item removed from cart")
   }
 
   const handleMoveToWishlist = async (e, cartId, productId) => {
     await addItemToWishlist(productId)
     await removeItemFromCart(cartId, productId)
+    toast.success("Item moved to wishlist")
     setCartData((prevCartData) => prevCartData.filter(cartItem => cartItem._id !== cartId))
   }
 
@@ -110,6 +112,7 @@ const Cart = () => {
             </div>
           </div>
         )}
+        <Toaster />
       </main>
     </>
   )

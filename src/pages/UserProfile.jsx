@@ -14,7 +14,6 @@ const UserProfile = () => {
               <p><strong>Mobile: </strong> +91 8539984975</p>
             </div>
           </div>
-          
         </div>
       </main>
     </>
