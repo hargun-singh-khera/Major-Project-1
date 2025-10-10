@@ -49,7 +49,7 @@ const Products = () => {
               {loading && renderPlaceholders(8, PlaceholderCard)}
             </div>
             {error && <p className="py-5">Something went wrong while loading products. Please try again later. </p>}
-            {products && products.length === 0 && (searchQuery !== "" ? (<p>No matching products found for {searchQuery}.</p>) : (<p>No matching products.</p>))}
+            {!loading && products && products.length === 0 && (searchQuery !== "" ? (<p>No matching products found for {searchQuery}.</p>) : (<p>No matching products.</p>))}
             {/* {products && products.length === 0 && searchQuery && <p>No matching products found for {searchQuery}.</p>} */}
             {/* {searchQuery === "" && products && products.length === 0 && <p>No matching products.</p>} */}
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
