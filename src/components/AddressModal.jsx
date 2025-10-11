@@ -1,6 +1,7 @@
 import React from 'react'
 
-const AddressModal = ({ formData, onSubmit, onChange }) => {
+const AddressModal = ({ formData, onSubmit, onChange, isSuccess }) => {
+    console.log("isSuccess", isSuccess)
     return (
         <form onSubmit={onSubmit}>
             <div className="modal fade" id="addressModal" tabIndex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
@@ -31,12 +32,12 @@ const AddressModal = ({ formData, onSubmit, onChange }) => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="pincode" className="form-label">Pincode</label>
-                                <input type="text" name="pincode" className="form-control" id="pincode" value={formData.pincode} onChange={onChange} />
+                                <input type="text" name="pincode" maxLength={6} className="form-control" id="pincode" value={formData.pincode} onChange={onChange} />
                             </div>
                         </div>
                         <div className="modal-footer d-flex flex-row">
                             <button type="button" className="btn btn-secondary flex-fill" data-bs-dismiss="modal">Cancel</button>
-                            <button className="btn btn-success flex-fill">Save</button>
+                            <button className="btn btn-success flex-fill" data-bs-dismiss={isSuccess ? "modal" : undefined}>Save</button>
                         </div>
                     </div>
                 </div>
