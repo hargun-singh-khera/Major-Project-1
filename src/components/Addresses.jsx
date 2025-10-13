@@ -41,7 +41,8 @@ const Addresses = () => {
             const data = await response.json()
             console.log("res added", response, "data", data)
             if (response.ok) {
-                setTimeout(() => setIsSuccess(true), 100)
+                // setTimeout(() => setIsSuccess(true), 100)
+                setIsSuccess(true)
                 setAddresses((prev) => ([...prev, data?.address]))
                 toast.success("Address added successfully")
             }
@@ -70,6 +71,22 @@ const Addresses = () => {
         } catch (error) {
             console.log(error?.message || "Error while deleting address")
             toast.error(error?.message || "Error while deleting address")
+        }
+    }
+
+    async function fetchAddress(addressId) {
+        // http://localhost:3000/api/address
+        // https://neo-g-backend-jwhg.vercel.app/api/address
+        try {
+            const response = await fetch(`http://localhost:3000/api/address/${addressId}`)
+            if(!response.ok) {
+                toast.error("Failed to fetch address.")
+            }
+            const data = await response.json()
+            console.log("address fetched data", data)
+            return data
+        } catch (error) {
+            console.log("Error fetching address")
         }
     }
 
@@ -141,6 +158,7 @@ const Addresses = () => {
             <div className="col-lg-5 d-flex justify-content-between align-items-end">
                 <h3 className="mt-4 mb-2">Addresses</h3>
                 <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
+                {/* <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} isSuccess={isSuccess} /> */}
             </div>
             <div className="col-lg-5 mt-4 mb-5">
                 {loading && <p>Loading...</p>}
@@ -153,11 +171,12 @@ const Addresses = () => {
                                 <p><strong>Address: </strong> {address?.address}</p>
                                 <p><strong>Pincode:</strong> {address?.pincode}</p>
                                 <div className="d-flex gap-3">
-                                    <button onClick={() => handleUpdateAddress(address?._id)} className="btn btn-primary flex-fill">Edit</button>
+                                    <button type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#addressModal">Edit</button>
                                     <button onClick={() => handleDeleteAddress(address?._id)} className="btn btn-danger flex-fill">Remove</button>
+                                     {/* onClick={() => handleUpdateAddress(address?._id)} */}
+                                    {/* <AddressModal formData={address} onSubmit={() => handleUpdateAddress(address?._id)} onChange={handleInputChange} isSuccess={isSuccess} /> */}
                                 </div>
                             </div>
-                            <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} isSuccess={isSuccess} />
                         </div>
                     ))
                 ) : (
