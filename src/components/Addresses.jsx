@@ -75,10 +75,8 @@ const Addresses = () => {
     }
 
     async function fetchAddress(addressId) {
-        // http://localhost:3000/api/address
-        // https://neo-g-backend-jwhg.vercel.app/api/address
         try {
-            const response = await fetch(`http://localhost:3000/api/address/${addressId}`)
+            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/address/${addressId}`)
             if(!response.ok) {
                 toast.error("Failed to fetch address.")
             }
