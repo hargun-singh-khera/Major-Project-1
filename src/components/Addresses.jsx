@@ -156,7 +156,7 @@ const Addresses = () => {
             <div className="col-lg-5 d-flex justify-content-between align-items-end">
                 <h3 className="mt-4 mb-2">Addresses</h3>
                 <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
-                {/* <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} isSuccess={isSuccess} /> */}
+                <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} isSuccess={isSuccess} />
             </div>
             <div className="col-lg-5 mt-4 mb-5">
                 {loading && <p>Loading...</p>}
@@ -172,7 +172,7 @@ const Addresses = () => {
                                     <button type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#addressModal">Edit</button>
                                     <button onClick={() => handleDeleteAddress(address?._id)} className="btn btn-danger flex-fill">Remove</button>
                                      {/* onClick={() => handleUpdateAddress(address?._id)} */}
-                                    {/* <AddressModal formData={address} onSubmit={() => handleUpdateAddress(address?._id)} onChange={handleInputChange} isSuccess={isSuccess} /> */}
+                                    <AddressModal formData={address} onSubmit={() => handleUpdateAddress(address?._id)} onChange={handleInputChange} isSuccess={isSuccess} />
                                 </div>
                             </div>
                         </div>
