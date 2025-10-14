@@ -9,7 +9,7 @@ const UserProfile = () => {
       <main className="container my-4">
         <h3>User Profile</h3>
         <div className="col-lg-5">
-          <div className="card border-0 p-2">
+          <div className="card border-0 p-2 rounded-3">
             <div className="card-body">
               <p><strong>Name:</strong> Hargun Singh Khera</p>
               <p><strong>Email:</strong> hargun@gmail.com</p>
