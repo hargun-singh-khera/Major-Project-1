@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddressModal = ({ formData, onSubmit, onChange, modalId="addressModal"  }) => {
+const AddressModal = ({ formData, onSubmit, onChange, modalId="addressModal", error  }) => {
     console.log("formData", formData)
     console.log("modalId", modalId)
     return (
@@ -38,7 +38,7 @@ const AddressModal = ({ formData, onSubmit, onChange, modalId="addressModal"  })
                         </div>
                         <div className="modal-footer d-flex flex-row">
                             <button type="button" className="btn btn-secondary flex-fill" data-bs-dismiss="modal">Cancel</button>
-                            <button className="btn btn-success flex-fill" data-bs-dismiss={"modal"}>Save</button>
+                            <button className="btn btn-success flex-fill" data-bs-dismiss={error === "" ? "modal" : undefined}>Save</button>
                         </div>
                     </div>
                 </div>

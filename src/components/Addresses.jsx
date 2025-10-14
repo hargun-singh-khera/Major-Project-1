@@ -17,6 +17,8 @@ const Addresses = () => {
     const [addresses, setAddresses] = useState()
     
     const [selectedAddress, setSelectedAddress] = useState({})
+    const [formError, setFormError] = useState("")
+    const [activeModal, setActiveModal] = useState("")
 
     useEffect(() => {
         if (data) {
@@ -26,8 +28,8 @@ const Addresses = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        console.log("name:", name, ", value:", value)
-        if(Object.keys(selectedAddress).length > 0) {
+        // console.log("name:", name, ", value:", value)
+        if(activeModal === "edit") {
             setSelectedAddress((prev) => ({...prev, [name]: value}))
         } else {
             setFormData((prev) => ({ ...prev, [name]: value }))
@@ -132,6 +134,7 @@ const Addresses = () => {
             error = "Please enter a valid pincode of 6 digits"
         }
         if (error) {
+            setFormError(error)
             toast.error(error)
         }
         else {
@@ -152,9 +155,9 @@ const Addresses = () => {
         <div>
             <div className="col-lg-5 d-flex justify-content-between align-items-end">
                 <h3 className="mt-4 mb-2">Addresses {addresses && addresses?.length > 0 && `(${addresses.length})`}</h3>
-                <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
+                <button onClick={() => setActiveModal("add")} type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
             </div>
-            <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" />
+            <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" error={formError} />
             <div className="col-lg-5 mt-4 mb-5">
                 {loading && <p>Loading...</p>}
                 {!loading && addresses && addresses?.length === 0 && <p className="py-3 text-secondary">Add your addresses and enjoy faster checkout.</p>}
@@ -167,14 +170,14 @@ const Addresses = () => {
                                 <p><strong>Address: </strong> {address?.address}</p>
                                 <p><strong>Pincode:</strong> {address?.pincode}</p>
                                 <div className="d-flex gap-3">
-                                    <button onClick={() => setSelectedAddress(address)} type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#editAddressModal">Edit</button>
+                                    <button onClick={() => {setSelectedAddress(address); setActiveModal("edit")}} type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#editAddressModal">Edit</button>
                                     <button onClick={() => handleDeleteAddress(address?._id)} className="btn btn-danger flex-fill">Remove</button>
                                 </div>
                             </div>
                         </div>
                     ))
                 )}
-                <AddressModal formData={selectedAddress} onSubmit={(e) => handleUpdateAddress(e, selectedAddress?._id)} onChange={handleInputChange} modalId="editAddressModal" />
+                <AddressModal formData={selectedAddress} onSubmit={(e) => handleUpdateAddress(e, selectedAddress?._id)} onChange={handleInputChange} modalId="editAddressModal" error={formError} />
             </div>
         </div>
     )
