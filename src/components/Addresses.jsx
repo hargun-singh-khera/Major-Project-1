@@ -15,7 +15,8 @@ const Addresses = () => {
     })
 
     const [addresses, setAddresses] = useState()
-    const [isSuccess, setIsSuccess] = useState(false)
+    
+    const [selectedAddress, setSelectedAddress] = useState({})
 
     useEffect(() => {
         if (data) {
@@ -25,7 +26,12 @@ const Addresses = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
+        console.log("name:", name, ", value:", value)
+        if(Object.keys(selectedAddress).length > 0) {
+            setSelectedAddress((prev) => ({...prev, [name]: value}))
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }))
+        }
     }
 
 
@@ -42,15 +48,15 @@ const Addresses = () => {
             console.log("res added", response, "data", data)
             if (response.ok) {
                 // setTimeout(() => setIsSuccess(true), 100)
-                setIsSuccess(true)
                 setAddresses((prev) => ([...prev, data?.address]))
+                setSelectedAddress({})
                 toast.success("Address added successfully")
             }
             else {
                 toast.error(error?.message || "Failed to add address.")
             }
         } catch (error) {
-            console.log("Error while adding address. Please try again.")
+            console.log("Error while adding address. Please try again.", error)
             toast.error("Error while adding address. Please try again.")
         }
     }
@@ -69,22 +75,8 @@ const Addresses = () => {
             console.log("addressId", addressId)
             setAddresses((prevAddresses) => prevAddresses.filter(address => address._id !== addressId))
         } catch (error) {
-            console.log(error?.message || "Error while deleting address")
-            toast.error(error?.message || "Error while deleting address")
-        }
-    }
-
-    async function fetchAddress(addressId) {
-        try {
-            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/address/${addressId}`)
-            if(!response.ok) {
-                toast.error("Failed to fetch address.")
-            }
-            const data = await response.json()
-            console.log("address fetched data", data)
-            return data
-        } catch (error) {
-            console.log("Error fetching address")
+            console.log("Error while deleting address", error)
+            toast.error("Error while deleting address")
         }
     }
 
@@ -95,15 +87,18 @@ const Addresses = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(selectedAddress)
             })
             if (!response.ok) {
                 throw new Error("Failed to update address")
             }
+            const data = await response.json()
+            setAddresses((prev) => prev.map(address => address._id === addressId ? {...data?.updatedAddress} : address))
+            setSelectedAddress({})
             toast.success("Address updated successfully")
         } catch (error) {
-            console.log(error?.message || "Error while updating address")
-            toast.error(error?.message || "Error while updating address")
+            console.log("Error while updating address", error)
+            toast.error("Error while updating address")
         }
     }
 
@@ -113,7 +108,8 @@ const Addresses = () => {
         await deleteAddress(addressId)
     }
 
-    const handleUpdateAddress = async (addressId) => {
+    const handleUpdateAddress = async (e, addressId) => {
+        e.preventDefault()
         await updateAddress(addressId)
     }
 
@@ -151,13 +147,15 @@ const Addresses = () => {
         }
     }
 
+    console.log("selectedAddress", selectedAddress)
+
     return (
         <div>
             <div className="col-lg-5 d-flex justify-content-between align-items-end">
                 <h3 className="mt-4 mb-2">Addresses</h3>
                 <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
-                <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} isSuccess={isSuccess} />
             </div>
+            <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" />
             <div className="col-lg-5 mt-4 mb-5">
                 {loading && <p>Loading...</p>}
                 {addresses && addresses?.length > 0 ? (
@@ -169,10 +167,9 @@ const Addresses = () => {
                                 <p><strong>Address: </strong> {address?.address}</p>
                                 <p><strong>Pincode:</strong> {address?.pincode}</p>
                                 <div className="d-flex gap-3">
-                                    <button type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#addressModal">Edit</button>
+                                    <button onClick={() => setSelectedAddress(address)} type="button" className="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#editAddressModal">Edit</button>
                                     <button onClick={() => handleDeleteAddress(address?._id)} className="btn btn-danger flex-fill">Remove</button>
                                      {/* onClick={() => handleUpdateAddress(address?._id)} */}
-                                    <AddressModal formData={address} onSubmit={() => handleUpdateAddress(address?._id)} onChange={handleInputChange} isSuccess={isSuccess} />
                                 </div>
                             </div>
                         </div>
@@ -180,6 +177,7 @@ const Addresses = () => {
                 ) : (
                     <p className="py-3 text-secondary">Add your addresses and enjoy faster checkout.</p>
                 )}
+                <AddressModal formData={selectedAddress} onSubmit={(e) => handleUpdateAddress(e, selectedAddress?._id)} onChange={handleInputChange} modalId="editAddressModal" />
             </div>
         </div>
     )
