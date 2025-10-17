@@ -5,6 +5,7 @@ import { useWishlistContext } from "../contexts/WishlistContext"
 import useFetch from "../useFetch"
 import PlaceholderCart from "../components/PlaceholderCart"
 import toast, { Toaster } from 'react-hot-toast'
+import { Link } from "react-router-dom"
 
 const Cart = () => {  
   const userId = "68cab48b2c77561237bcf9f0"
@@ -106,7 +107,7 @@ const Cart = () => {
                   </div>
                   <hr className="m-0" />
                   <p className="fs-5 mt-2">You will save ₹{calculateTotalDiscount().toLocaleString('en-US')} on this order.</p>
-                  <button className="btn btn-primary w-100">Place Order</button>
+                  <Link to={"/checkout"} className="btn btn-primary w-100">Place Order</Link>
                 </div>
               </div>
             </div>

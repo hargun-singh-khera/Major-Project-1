@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 
 const Addresses = () => {
     const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/address")
-    console.log("data", data)
+    // console.log("data", data)
 
     const [formData, setFormData] = useState({
         state: "",
@@ -153,12 +153,12 @@ const Addresses = () => {
 
     return (
         <div>
-            <div className="col-lg-5 d-flex justify-content-between align-items-end">
+            <div className="d-flex justify-content-between align-items-end">
                 <h3 className="mt-4 mb-2">Addresses {addresses && addresses?.length > 0 && `(${addresses.length})`}</h3>
                 <button onClick={() => setActiveModal("add")} type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
             </div>
             <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" error={formError} />
-            <div className="col-lg-5 mt-4 mb-5">
+            <div className="mt-4 mb-5">
                 {loading && <p>Loading...</p>}
                 {!loading && addresses && addresses?.length === 0 && <p className="py-3 text-secondary">Add your addresses and enjoy faster checkout.</p>}
                 {!loading && addresses && addresses?.length > 0 && (

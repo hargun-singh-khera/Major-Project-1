@@ -7,7 +7,7 @@ import ShopByCategory from "../components/ShopByCategory"
 import { useProductContext } from "../contexts/ProductContext"
 
 const Home = () => {
-  const {  setCategory, setDiscount, setSeason } = useProductContext()
+  const { setCategory, setDiscount, setSeason } = useProductContext()
 
   useEffect(() => {
     setCategory([])
