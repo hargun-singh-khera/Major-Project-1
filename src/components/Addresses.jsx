@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 
 const Addresses = () => {
     const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/address")
+    // const { data, loading, error } = useFetch("http://localhost:3000/api/address")
     // console.log("data", data)
 
     const [formData, setFormData] = useState({
