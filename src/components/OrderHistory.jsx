@@ -78,7 +78,7 @@ const OrderHistory = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="card-text text-end"><small className="text-body-secondary">Order placed on {order?.createdAt}</small></p>
+                                    <p className="card-text text-end"><small className="text-body-secondary">Order placed on {new Date(order?.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</small></p>
                                 </div>
                             </div>
                         </div>
