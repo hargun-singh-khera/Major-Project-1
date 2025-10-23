@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import useFetch from '../useFetch'
 import AddressModal from '../components/AddressModal'
@@ -14,6 +14,93 @@ const Checkout = () => {
 
     const [orderLoading, setOrderLoading] = useState(false)
     const [selectedAddress, setSelectedAddress] = useState({})
+    const [formError, setFormError] = useState("")
+    const [activeModal, setActiveModal] = useState("")
+
+    const [formData, setFormData] = useState({
+        state: "",
+        city: "",
+        address: "",
+        pincode: "",
+    })
+
+    const [addresses, setAddresses] = useState()
+
+    useEffect(() => {
+        if (data) {
+            setAddresses(data?.addresses)
+        }
+    }, [data])
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        // console.log("name:", name, ", value:", value)
+        if(activeModal === "edit") {
+            setSelectedAddress((prev) => ({...prev, [name]: value}))
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }))
+        }
+    }
+
+    async function addAddress(formData) {
+        try {
+            const response = await fetch("https://neo-g-backend-jwhg.vercel.app/api/address", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+            const data = await response.json()
+            console.log("res added", response, "data", data)
+            if (response.ok) {
+                setAddresses((prev) => ([...prev, data?.address]))
+                setSelectedAddress({})
+                toast.success("Address added successfully")
+            }
+            else {
+                toast.error(error?.message || "Failed to add address.")
+            }
+        } catch (error) {
+            console.log("Error while adding address. Please try again.", error)
+            toast.error("Error while adding address. Please try again.")
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const { state, city, address, pincode } = formData
+        let error = ""
+        if (!state) {
+            error = "Please enter your state"
+        }
+        else if (!city) {
+            error = "Please enter your city"
+        }
+        else if (!address) {
+            error = "Please enter your address"
+        }
+        else if (!pincode) {
+            error = "Please enter your pincode"
+        }
+        else if (pincode.length !== 6) {
+            error = "Please enter a valid pincode of 6 digits"
+        }
+        if (error) {
+            setFormError(error)
+            toast.error(error)
+        }
+        else {
+            addAddress(formData)
+            setFormData({
+                state: "",
+                city: "",
+                address: "",
+                pincode: "",
+            })
+            console.log(formData)
+        }
+    }
 
     console.log("cart", cart, "selectedAddress", selectedAddress)
 
@@ -82,7 +169,10 @@ const Checkout = () => {
                                 <h4>Select a delivery address</h4>
                                 <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
                             </div>
-                            {data?.addresses?.map((address, index) => (
+                            <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" error={formError} />
+                            {loading && <p>Loading...</p>}
+                            {!loading && addresses?.length === 0 && <p>No address found. Please add an address.</p>}
+                            {addresses?.map((address, index) => (
                                 <div key={address._id} className="p-3 card mb-3 border-0 rounded-3">
                                     <div key={index} className="form-check">
                                         <input value={address} checked={address._id === selectedAddress._id} onChange={() => setSelectedAddress(address)} className="my-5 form-check-input" type="radio" name="radioDefault" id={address?._id} />

@@ -160,7 +160,13 @@ const Addresses = () => {
             </div>
             <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" error={formError} />
             <div className="mt-4 mb-5">
-                {loading && <p>Loading...</p>}
+                {loading && (
+                    <div className="d-flex my-5 justify-content-center">
+                        <div className="spinner-border text-danger" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                )} 
                 {!loading && addresses && addresses?.length === 0 && <p className="py-3 text-secondary">Add your addresses and enjoy faster checkout.</p>}
                 {!loading && addresses && addresses?.length > 0 && (
                     addresses.map(address => (
