@@ -18,12 +18,12 @@ const OrderHistory = () => {
             )} 
             {!loading && error && <p>Something went wrong while fetching orders. Please try again.</p>}
             {!loading && data?.orders?.length === 0 && <p>No orders found.</p>}
-            {!loading && data?.orders?.length > 0 && <div className="accordion" id="accordionOrders">
+            {!loading && data?.orders?.length > 0 && <div className="accordion my-4" id="accordionOrders">
                 {data?.orders?.map((order, index) => (
                     <div key={order._id} className="accordion-item">
                         <h2 className="accordion-header">
                             <button className={`accordion-button ${index > 0 ? "collapsed" : ""}`} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${order._id}`} aria-expanded="true" aria-controls={`collapse-${order._id}`}>
-                                <div className="d-flex justify-content-between w-100 px-3">
+                                <div className="d-flex justify-content-between w-100 px-md-3">
                                     <div>Order Id: {order?._id}</div>
                                     <div>Total: ₹{order?.totalAmount}</div>
                                 </div>

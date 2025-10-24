@@ -6,7 +6,7 @@ const ShopByArrivals = () => {
   return (
     <section id="shopByArrivals" >
       <div className="row my-5">
-        <div className="col-md-6">
+        <div className="col-lg-12 col-xl-6">
           <div className="card mb-3 p-5 border-0">
             <div className="row g-0">
               <div className="col-md-4">
@@ -23,7 +23,7 @@ const ShopByArrivals = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-12 col-xl-6">
           <div className="card mb-3 p-5 border-0">
             <div className="row g-0">
               <div className="col-md-4">

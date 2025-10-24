@@ -83,7 +83,7 @@ const ProductDetailsComp = ({ product, toast }) => {
           </button>
           <button onClick={handleAddToCart} className="btn btn-secondary w-100">{isAddToCart ? "Go to Cart" : "Add to Cart"}</button>
         </div>
-        <div className="col-lg-6 px-4 ">
+        <div className="col-lg-6 px-2 px-md-4">
           <div className="card-body">
             <h3 className="card-title ">{name}</h3>
             <h5 className="card-text text-body-tertiary">{title}</h5>
@@ -106,7 +106,7 @@ const ProductDetailsComp = ({ product, toast }) => {
               )}
             </div>
             {discount > 0 && <h4 className="text-body-tertiary fw-light mb-4">{discount}% Off</h4>}
-            <div className="d-flex gap-3 mb-3">
+            <div className="d-flex gap-3 mb-4">
               <span>
                 <strong>Quantity: </strong>
               </span>
@@ -122,7 +122,7 @@ const ProductDetailsComp = ({ product, toast }) => {
               <span>
                 <strong>Size:</strong>
               </span>
-              <div className="d-flex flex-wrap gap-4 ms-2">
+              <div className="d-flex gap-2 gap-md-4 ms-md-2">
                 {size.map((item, index) => (
                   <button
                     onClick={() => setSizeSelected(item)}
@@ -135,9 +135,7 @@ const ProductDetailsComp = ({ product, toast }) => {
               </div>
             </div>
             <hr />
-            <div className="d-flex gap-4 flex-wrap">
-              <ProductBuyingBenefits />
-            </div>
+            <ProductBuyingBenefits />
             <hr />
             <div>
               <h5>Description:</h5>
@@ -153,10 +151,10 @@ const ProductDetailsComp = ({ product, toast }) => {
         {!loading && products && products.length > 0 && (
           <div className="p-3">
             <hr />
-            <h3 className="fs-4 fw-semibold">
+            <h3 className="fs-5 fs-md-4 fw-semibold">
               More items you may like in apparel
             </h3>
-            <div className="row row-cols-1 row-cols-md-4 g-4 my-2">
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 g-md-5 g-lg-4 my-2">
               {products.filter(product => product._id !== productId).slice(Math.min(randomIndex, products.length - 1 - fixedLength), randomIndex + fixedLength).map(item => <ProductCard key={item._id} product={item} />)}
             </div>
           </div>

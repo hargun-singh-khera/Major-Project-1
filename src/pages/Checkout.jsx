@@ -35,8 +35,8 @@ const Checkout = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target
         // console.log("name:", name, ", value:", value)
-        if(activeModal === "edit") {
-            setSelectedAddress((prev) => ({...prev, [name]: value}))
+        if (activeModal === "edit") {
+            setSelectedAddress((prev) => ({ ...prev, [name]: value }))
         } else {
             setFormData((prev) => ({ ...prev, [name]: value }))
         }
@@ -148,7 +148,7 @@ const Checkout = () => {
     }
 
     const handlePlaceOrder = () => {
-        if(!Object.keys(selectedAddress).length) {
+        if (!Object.keys(selectedAddress).length) {
             toast.error("Please select a delivery address.")
         }
         else {
@@ -170,7 +170,13 @@ const Checkout = () => {
                                 <button type="button" className="btn btn-sm btn-warning text-white px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#addressModal">+ ADD NEW ADDRESS</button>
                             </div>
                             <AddressModal formData={formData} onSubmit={handleSubmit} onChange={handleInputChange} modalId="addressModal" error={formError} />
-                            {loading && <p>Loading...</p>}
+                            {loading && (
+                                <div className="d-flex justify-content-center align-items-center my-5">
+                                    <div className="spinner-border text-danger" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            )}
                             {!loading && addresses?.length === 0 && <p>No address found. Please add an address.</p>}
                             {addresses?.map((address, index) => (
                                 <div key={address._id} className="p-3 card mb-3 border-0 rounded-3">

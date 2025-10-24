@@ -9,7 +9,7 @@ const ShopByBanner = () => {
       <div className="card">
         <img src="https://templates.hibootstrap.com/xton/rtl/assets/img/offer-bg.jpg" className="rounded img-fluid" alt="..." />
         <div className="card-img-overlay d-flex justify-content-center align-items-center">
-          <div className="text-center bg-white bg-opacity-75 p-4 rounded ">
+          <div className="text-center bg-white bg-opacity-75 p-1 p-md-2 p-lg-4 rounded ">
             <div className="card-body">
               <h6 className="text-uppercase small">Limited Time Offer!</h6>
               <h2 className="display-6 fw-semibold">OFF {DISCOUNT}%-</h2>

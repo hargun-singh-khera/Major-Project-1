@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { useWishlistContext } from "../contexts/WishlistContext"
 import { useCartContext } from "../contexts/CartContext"
 import { useProductContext } from "../contexts/ProductContext"
+import logo from "../assets/images/logo.png"
+
 const Header = () => {
   const { wishlistCount } = useWishlistContext()
   const { cart } = useCartContext()
@@ -15,9 +17,11 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg bg-white py-lg-0">
+      <nav className="navbar navbar-expand-lg bg-white py-lg-0 px-0 px-1">
         <div className="container">
-          <Link className="navbar-brand" to="/">Trendyne</Link>
+          <Link className="navbar-brand" to="/">
+            <img style={{ width: "110px", height: "auto" }} className="img-fluid" src={logo} alt="" />
+          </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

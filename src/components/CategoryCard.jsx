@@ -5,7 +5,7 @@ const CategoryCard = ({category}) => {
   const { setCategory } = useProductContext()
   // console.log("category of category card", cat)
   return (
-    <div className="col-lg-4">
+    <div className="col-lg-6 col-xl-4">
       <Link onClick={() => setCategory([name])} to={`/shop/products`} className="text-decoration-none">
         <div className="card border-0">
           <img src={imageUrl} className="card-img-top img-fluid" alt={name} />

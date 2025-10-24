@@ -9,7 +9,7 @@ const Carousel = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img src="https://templates.hibootstrap.com/xton/default/assets/img/main-banner5.jpg" className="d-block w-100" alt="..." />
-          <div className="carousel-caption d-flex flex-column h-100 justify-content-center align-items-start fs-6 fs-md-5 fs-lg-4">
+          <div className="carousel-caption d-flex flex-column w-75 h-100 justify-content-center align-items-start fs-6 fs-md-5 fs-lg-4">
             <h6>Limited Time Offer!</h6>
             <h4 className="display-6 fw-semibold text-start">Winter-Spring 2025!</h4>
             <p>Take 20% Off 'Sales Must Have'</p>
@@ -21,7 +21,7 @@ const Carousel = () => {
         </div>
         <div className="carousel-item">
           <img src="https://templates.hibootstrap.com/xton/default/assets/img/main-banner3.jpg" className="d-block w-100" alt="..." />
-          <div className="carousel-caption d-flex flex-column h-100 justify-content-center align-items-start">
+          <div className="carousel-caption d-flex flex-column w-75 h-100 justify-content-center align-items-start">
             <h6 className="text-black">Buy Now!</h6>
             <h4 className="display-6 fw-semibold text-black text-start">New Season Canvas!</h4>
             <p className="text-black">Take 20% Off 'Sales Must Have'</p>
@@ -33,7 +33,7 @@ const Carousel = () => {
         </div>
         <div className="carousel-item">
           <img src="https://templates.hibootstrap.com/xton/default/assets/img/main-banner4.jpg" className="d-block w-100" alt="..." />
-          <div className="carousel-caption d-flex flex-column h-100 justify-content-center align-items-start">
+          <div className="carousel-caption d-flex flex-column w-75 h-100 justify-content-center align-items-start">
             <h6>Exclusive Offer!</h6>
             <h4 className="display-6 fw-semibold">Winter 2025!</h4>
             <p>Last year offer 'Sales Must Have'</p>
