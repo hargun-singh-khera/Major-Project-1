@@ -35,7 +35,7 @@ const Wishlist = () => {
     e.stopPropagation()
     await removeItemFromWishlist(productId)
     setWishlistData((prevProduct) => prevProduct.filter(product => product.productId._id !== productId))
-    toast.success("Item deleted from wishlist")
+    toast.success("Item removed from wishlist")
   }
 
   const handleMoveToCart = async (e, productId) => {

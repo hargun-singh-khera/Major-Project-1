@@ -1,6 +1,6 @@
 const ProductBuyingBenefits = () => {
   return (
-    <div className="d-flex justify-content-between justify-content-xl-start flex-wrap flex-lg-nowrap gap-xs-2 gap-md-3 gap-lg-4 gap-xl-5">
+    <div className="d-flex justify-content-between justify-content-xl-start flex-wrap flex-lg-nowrap gap-2 gap-md-3 gap-lg-4 gap-xl-5">
       <div>
         <div className="bg-light rounded-circle p-4">
           <i className="bi bi-truck h1"></i>
