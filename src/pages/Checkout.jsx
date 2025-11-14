@@ -8,7 +8,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const Checkout = () => {
     const navigate = useNavigate()
-    const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/address")
+    const { data, loading, error } = useFetch("https://neo-g-backend-ckt5.vercel.app/api/address")
     // console.log("address data", data)
     const { cart, setCart, DELIVERY_CHARGES, calculateTotalPrice, calculateTotalDiscount, calculateTotalPayableAmount } = useCartContext()
 

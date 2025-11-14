@@ -9,7 +9,7 @@ export default CartContext
 
 export function CartProvider({ children }) {
     const userId = "68cab48b2c77561237bcf9f0"
-    const { data } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}`)
+    const { data } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/cart/${userId}`)
 
 
     const [cart, setCart] = useState([])
@@ -51,7 +51,7 @@ export function CartProvider({ children }) {
 
     async function addItemToCart(productId, size, quantity=1) {
         try {
-            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
+            const response = await fetch(`https://neo-g-backend-ckt5.vercel.app/api/cart/${userId}/${productId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export function CartProvider({ children }) {
 
     async function removeItemFromCart(cartId, productId) {
         try {
-            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}/${productId}`, {
+            const response = await fetch(`https://neo-g-backend-ckt5.vercel.app/api/cart/${userId}/${productId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

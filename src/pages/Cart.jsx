@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 
 const Cart = () => {  
   const userId = "68cab48b2c77561237bcf9f0"
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/cart/${userId}`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/cart/${userId}`)
   const { cart, setCart, DELIVERY_CHARGES, increaseQuantity, decreaseQuantity, getCartQuantity, removeItemFromCart, calculateTotalPrice, calculateTotalDiscount, calculateTotalPayableAmount } = useCartContext()
   const { addItemToWishlist } = useWishlistContext()
 

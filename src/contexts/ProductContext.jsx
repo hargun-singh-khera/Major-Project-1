@@ -8,7 +8,7 @@ export const useProductContext = () => useContext(ProductContext)
 export default ProductContext
 
 export function ProductProvider({ children }) {
-    const { data } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+    const { data } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/products`)
 
     const DEFAULT_MAX_PRICE = 2500
     

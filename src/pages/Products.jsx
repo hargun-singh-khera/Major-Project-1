@@ -9,7 +9,7 @@ import useFetch from "../useFetch"
 import toast, { Toaster } from 'react-hot-toast'
 
 const Products = () => {
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/products`)
   // const { data, loading, error } = useFetch(`http://localhost:3000/api/products`)
 
   const { filteredProducts: products, setProducts, setSelectedCategory } = useProductContext()

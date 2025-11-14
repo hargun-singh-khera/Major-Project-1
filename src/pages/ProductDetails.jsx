@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const ProductDetails = () => {
   const { productId } = useParams()
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/products/${productId}`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/products/${productId}`)
   // const { data, loading, error } = useFetch(`http://localhost:3000/api/products/${productId}`)
   
   // console.log("data", data)

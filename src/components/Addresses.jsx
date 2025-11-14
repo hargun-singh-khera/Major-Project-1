@@ -4,7 +4,7 @@ import useFetch from "../useFetch"
 import toast from 'react-hot-toast'
 
 const Addresses = () => {
-    const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/address")
+    const { data, loading, error } = useFetch("https://neo-g-backend-ckt5.vercel.app/api/address")
     // const { data, loading, error } = useFetch("http://localhost:3000/api/address")
     // console.log("data", data)
 
@@ -40,7 +40,7 @@ const Addresses = () => {
 
     async function addAddress(formData) {
         try {
-            const response = await fetch("https://neo-g-backend-jwhg.vercel.app/api/address", {
+            const response = await fetch("https://neo-g-backend-ckt5.vercel.app/api/address", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Addresses = () => {
     async function deleteAddress(addressId) {
         console.log("addressId", addressId)
         try {
-            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/address/${addressId}`, {
+            const response = await fetch(`https://neo-g-backend-ckt5.vercel.app/api/address/${addressId}`, {
                 method: "DELETE",
             })
             console.log("res", response)
@@ -84,7 +84,7 @@ const Addresses = () => {
 
     async function updateAddress(addressId) {
         try {
-            const response = await fetch(`https://neo-g-backend-jwhg.vercel.app/api/update/address/${addressId}`, {
+            const response = await fetch(`https://neo-g-backend-ckt5.vercel.app/api/update/address/${addressId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

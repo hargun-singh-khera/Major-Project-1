@@ -3,7 +3,7 @@ import useFetch from '../useFetch'
 import AddressModal from "../components/AddressModal"
 
 const OrderHistory = () => {
-    const { data, loading, error } = useFetch("https://neo-g-backend-jwhg.vercel.app/api/orders")
+    const { data, loading, error } = useFetch("https://neo-g-backend-ckt5.vercel.app/api/orders")
     // const { data, loading, error } = useFetch("http://localhost:3000/api/orders")
 
     console.log("data", data)

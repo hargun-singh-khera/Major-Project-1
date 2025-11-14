@@ -12,7 +12,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const Wishlist = () => {
   const userId = "68cab48b2c77561237bcf9f0"
-  const { data, loading, error } = useFetch(`https://neo-g-backend-jwhg.vercel.app/api/wishlists/${userId}`)
+  const { data, loading, error } = useFetch(`https://neo-g-backend-ckt5.vercel.app/api/wishlists/${userId}`)
   // const { data, loading, error } = useFetch(`http://localhost:3000/api/wishlists/${userId}`)
 
   // console.log("data", data)
